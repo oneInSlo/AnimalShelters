@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shelters>
+    <shelter id="S001" region="Osrednjeslovenska">
+        <name>Zavetišče Ljubljana</name>
+        <city>Ljubljana</city>
+        <latitude>46.0511</latitude>
+        <longitude>14.5051</longitude>
+        <capacity>180</capacity>
+        <phone>+386 1 256 02 79</phone>
+        <email>info@zavetisce-lj.si</email>
+        <established>2002-10-04</established>
+    </shelter>
+
+    <shelter id="S002" region="Podravska">
+        <name>Zavetišče Maribor</name>
+        <city>Maribor</city>
+        <latitude>46.5193</latitude>
+        <longitude>15.6761</longitude>
+        <capacity>120</capacity>
+        <phone>+386 2 480 16 60</phone>
+        <email>zavetisce.mb@snaga-mb.si</email>
+        <established>1999-03-21</established>
+    </shelter>
+
+    <shelter id="S003" region="Savinjska">
+        <name>Zavetišče Celje</name>
+        <city>Celje</city>
+        <latitude>46.2361</latitude>
+        <longitude>15.2675</longitude>
+        <capacity>90</capacity>
+        <phone>+386 3 426 78 55</phone>
+        <email>info@zavetisce-celje.si</email>
+        <established>2001-10-02</established>
+    </shelter>
+
+    <shelter id="S004" region="Gorenjska">
+        <name>Zavetišče Kranj</name>
+        <city>Kranj</city>
+        <latitude>46.2388</latitude>
+        <longitude>14.3556</longitude>
+        <capacity>75</capacity>
+        <phone>+386 4 281 07 92</phone>
+        <email>info@zavetisce-kranj.si</email>
+        <established>2003-07-17</established>
+    </shelter>
+
+    <shelter id="S005" region="Jugovzhodna Slovenija">
+        <name>Zavetišče Novo mesto</name>
+        <city>Novo mesto</city>
+        <latitude>45.8030</latitude>
+        <longitude>15.1686</longitude>
+        <capacity>60</capacity>
+        <phone>+386 4 123 32 48</phone>
+        <email>info@dzzz-nm.si</email>
+        <established>2005-04-05</established>
+    </shelter>
+
+    <shelter id="S006" region="Obalno-kraška">
+        <name>Zavetišče Koper</name>
+        <city>Koper</city>
+        <latitude>45.5481</latitude>
+        <longitude>13.7302</longitude>
+        <capacity>85</capacity>
+        <phone>+386 5 639 85 22</phone>
+        <email>info@zavetisce-kp.si</email>
+        <established>2008-06-30</established>
+    </shelter>
+
+    <shelter id="S007" region="Savinjska">
+        <name>Zavetišče Velenje</name>
+        <city>Velenje</city>
+        <latitude>46.3593</latitude>
+        <longitude>15.1103</longitude>
+        <capacity>70</capacity>
+        <phone>+386 3 897 61 10</phone>
+        <email>info@zavetisce-velenje.si</email>
+        <established>2004-11-11</established>
+    </shelter>
+
+    <shelter id="S008" region="Goriška">
+        <name>Zavetišče Nova Gorica</name>
+        <city>Nova Gorica</city>
+        <latitude>45.9556</latitude>
+        <longitude>13.6486</longitude>
+        <capacity>65</capacity>
+        <phone>+386 5 338 44 19</phone>
+        <email>info@zavetisce-ng.si</email>
+        <established>2010-09-09</established>
+    </shelter>
+
+    <shelter id="S009" region="Pomurska">
+        <name>Zavetišče Murska Sobota</name>
+        <city>Murska Sobota</city>
+        <latitude>46.6580</latitude>
+        <longitude>16.1663</longitude>
+        <capacity>55</capacity>
+        <phone>+386 2 531 84 77</phone>
+        <email>info@zavetisce-ms.si</email>
+        <established>2012-12-12</established>
+    </shelter>
+
+    <shelter id="S010" region="Podravska">
+        <name>Zavetišče Ptuj</name>
+        <city>Ptuj</city>
+        <latitude>46.4203</latitude>
+        <longitude>15.8700</longitude>
+        <capacity>50</capacity>
+        <phone>+386 2 749 32 21</phone>
+        <email>info@zavetisce-pt.si</email>
+        <established>2011-01-20</established>
+    </shelter>
+
+    <shelter id="S011" region="Gorenjska">
+        <name>Zavetišče Jesenice</name>
+        <city>Jesenice</city>
+        <latitude>46.4333</latitude>
+        <longitude>14.0667</longitude>
+        <capacity>40</capacity>
+        <phone>+386 4 586 70 14</phone>
+        <email>info@zavetisce-jes.si</email>
+        <established>2007-02-14</established>
+    </shelter>
+
+    <shelter id="S012" region="Zasavska">
+        <name>Zavetišče Trbovlje</name>
+        <city>Trbovlje</city>
+        <latitude>46.1540</latitude>
+        <longitude>15.0536</longitude>
+        <capacity>45</capacity>
+        <phone>+386 3 562 41 19</phone>
+        <email>info@zavetisce-tr.si</email>
+        <established>2013-03-03</established>
+    </shelter>
+
+    <shelter id="S013" region="Osrednjeslovenska">
+        <name>Zavetišče Kamnik</name>
+        <city>Kamnik</city>
+        <latitude>46.2231</latitude>
+        <longitude>14.6075</longitude>
+        <capacity>35</capacity>
+        <phone>+386 1 839 11 25</phone>
+        <email>info@zavetisce-kam.si</email>
+        <established>2015-08-24</established>
+    </shelter>
+
+    <shelter id="S014" region="Posavska">
+        <name>Zavetišče Brežice</name>
+        <city>Brežice</city>
+        <latitude>45.9050</latitude>
+        <longitude>15.5911</longitude>
+        <capacity>30</capacity>
+        <phone>+386 7 496 20 34</phone>
+        <email>info@zavetisce-bre.si</email>
+        <established>2016-06-06</established>
+    </shelter>
+
+    <shelter id="S015" region="Goriška">
+        <name>Zavetišče Idrija</name>
+        <city>Idrija</city>
+        <latitude>46.0025</latitude>
+        <longitude>14.0300</longitude>
+        <capacity>25</capacity>
+        <phone>+386 5 377 09 43</phone>
+        <email>info@zavetisce-id.si</email>
+        <established>2018-10-18</established>
+    </shelter>
+</shelters>

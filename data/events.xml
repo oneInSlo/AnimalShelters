@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+    <event id="E001" type="open_day">
+        <title>Dan odprtih vrat</title>
+        <date>2026-09-07</date>
+        <city>Ljubljana</city>
+        <shelterId>S001</shelterId>
+        <startTime>10:00</startTime>
+        <endTime>16:00</endTime>
+        <location>Zavetišče Ljubljana</location>
+        <description>Obiščite nas na dnevu odprtih vrat in spoznajte živali, ki iščejo nov dom.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E002" type="adoption">
+        <title>Adopcija v parku</title>
+        <date>2026-09-21</date>
+        <city>Maribor</city>
+        <shelterId>S002</shelterId>
+        <startTime>09:00</startTime>
+        <endTime>14:00</endTime>
+        <location>Mestni park Maribor</location>
+        <description>Predstavitev psov in mačk za posvojitev v sproščenem okolju parka.</description>
+        <status>prihajajoči</status>
+        <audience>družine</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E003" type="volunteer_meeting">
+        <title>Srečanje prostovoljcev</title>
+        <date>2026-10-05</date>
+        <city>Celje</city>
+        <shelterId>S003</shelterId>
+        <startTime>17:00</startTime>
+        <endTime></endTime>
+        <location>Zavetišče Celje</location>
+        <description>Letno srečanje prostovoljcev za izmenjavo izkušenj in načrtovanje prihodnjih projektov.</description>
+        <status>prihajajoči</status>
+        <audience>prostovoljci</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E004" type="fundraising_fair">
+        <title>Donatorski sejem</title>
+        <date>2026-08-30</date>
+        <city>Kranj</city>
+        <shelterId>S004</shelterId>
+        <startTime>09:00</startTime>
+        <endTime>15:00</endTime>
+        <location>Glavni trg, Kranj</location>
+        <description>Dobrodelni sejem z ročnimi izdelki in delavnicami za podporo zavetišču.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>donation</fee>
+        </entry>
+    </event>
+
+    <event id="E005" type="adoption_chip">
+        <title>Adopcija in čipiranje</title>
+        <date>2026-10-12</date>
+        <city>Novo mesto</city>
+        <shelterId>S005</shelterId>
+        <startTime>09:00</startTime>
+        <endTime>13:00</endTime>
+        <location>Zavetišče Novo mesto</location>
+        <description>Adopcija živali in čipiranje za nove lastnike.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E006" type="charity_walk">
+        <title>Sprehod za dobrodelnost</title>
+        <date>2026-06-16</date>
+        <city>Koper</city>
+        <shelterId>S006</shelterId>
+        <startTime>08:30</startTime>
+        <endTime>12:00</endTime>
+        <location>Obala Koper</location>
+        <description>Dobrodelni sprehod za zbiranje sredstev za živali v zavetišču.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>donation</fee>
+        </entry>
+    </event>
+
+    <event id="E007" type="workshop">
+        <title>Delavnica skrbništva</title>
+        <date>2026-07-10</date>
+        <city>Velenje</city>
+        <shelterId>S007</shelterId>
+        <startTime>14:00</startTime>
+        <endTime>16:00</endTime>
+        <location>Zavetišče Velenje</location>
+        <description>Delavnica o pravilnem skrbstvu živali in osnovah treninga.</description>
+        <status>prihajajoči</status>
+        <audience>prostovoljci</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E008" type="summer_adoption">
+        <title>Poletna adopcija</title>
+        <date>2026-08-14</date>
+        <city>Nova Gorica</city>
+        <shelterId>S008</shelterId>
+        <startTime>10:00</startTime>
+        <endTime>14:00</endTime>
+        <location>Park Nova Gorica</location>
+        <description>Adopcija mačk in psov v prijetnem poletnem vzdušju.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E009" type="autumn_adoption">
+        <title>Jesenska adopcija</title>
+        <date>2026-10-03</date>
+        <city>Murska Sobota</city>
+        <shelterId>S009</shelterId>
+        <startTime>09:30</startTime>
+        <endTime>13:30</endTime>
+        <location>Zavetišče Murska Sobota</location>
+        <description>Adopcija živali pred začetkom zime.</description>
+        <status>prihajajoči</status>
+        <audience>družine</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E010" type="family_day">
+        <title>Družinski dan</title>
+        <date>2026-09-15</date>
+        <city>Ptuj</city>
+        <shelterId>S010</shelterId>
+        <startTime>11:00</startTime>
+        <endTime>15:00</endTime>
+        <location>Zavetišče Ptuj</location>
+        <description>Druženje za družine s predstavitvijo živali za posvojitev.</description>
+        <status>prihajajoči</status>
+        <audience>družine</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E011" type="adoption_tips">
+        <title>Adopcija in nasveti</title>
+        <date>2026-05-05</date>
+        <city>Jesenice</city>
+        <shelterId>S011</shelterId>
+        <startTime>10:00</startTime>
+        <endTime>14:00</endTime>
+        <location>Zavetišče Jesenice</location>
+        <description>Posvojite žival in pridobite nasvete o skrbstvu.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E012" type="awareness">
+        <title>Dogodek osveščanja</title>
+        <date>2026-03-19</date>
+        <city>Trbovlje</city>
+        <shelterId>S012</shelterId>
+        <startTime>13:00</startTime>
+        <endTime>16:00</endTime>
+        <location>Zavetišče Trbovlje</location>
+        <description>Osveščanje o pravicah in potrebah živali.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E013" type="adoption">
+        <title>Adopcija</title>
+        <date>2026-04-28</date>
+        <city>Kamnik</city>
+        <shelterId>S013</shelterId>
+        <startTime>10:00</startTime>
+        <endTime>14:00</endTime>
+        <location>Zavetišče Kamnik</location>
+        <description>Posvojitev psov in mačk.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+
+    <event id="E014" type="spring_fair">
+        <title>Pomladni sejem</title>
+        <date>2026-04-12</date>
+        <city>Brežice</city>
+        <shelterId>S014</shelterId>
+        <startTime>09:00</startTime>
+        <endTime>13:00</endTime>
+        <location>Zavetišče Brežice</location>
+        <description>Pomladni sejem z lokalnimi izdelki za podporo zavetišču.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>donation</fee>
+        </entry>
+    </event>
+
+    <event id="E015" type="autumn_walk">
+        <title>Jesenski sprehod</title>
+        <date>2026-10-10</date>
+        <city>Idrija</city>
+        <shelterId>S015</shelterId>
+        <startTime>10:00</startTime>
+        <endTime>13:00</endTime>
+        <location>Zavetišče Idrija</location>
+        <description>Jesenski sprehod s predstavitvijo živali za posvojitev.</description>
+        <status>prihajajoči</status>
+        <audience>javnost</audience>
+        <entry>
+            <fee>free</fee>
+        </entry>
+    </event>
+</events>
