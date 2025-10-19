@@ -1,0 +1,20 @@
+{
+  "name": "animal-shelters-backend",
+  "version": "1.0.0",
+  "description": "Slovenian animal shelters",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "fast-xml-parser": "^5.3.0",
+    "xmlbuilder2": "^4.0.0"
+  }
+}

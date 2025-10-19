@@ -1,0 +1,40 @@
+[
+  {
+    "id": "O001",
+    "species": "Zajec",
+    "name": "Kiki",
+    "breed": "Pritlikavi",
+    "sex": "Samica",
+    "ageMonths": 8,
+    "colors": [
+      "Bela"
+    ],
+    "weightKg": 1.1,
+    "neutered": false,
+    "adoptionFee": 20,
+    "intakeDate": "2024-09-03",
+    "vaccinations": [
+      "RV"
+    ],
+    "microchip": 981020008901234,
+    "temperament": [
+      "Miren",
+      "Radoveden"
+    ],
+    "shelterId": "S006",
+    "shelter": {
+      "id": "S006",
+      "name": "Zavetišče za mačke Mačji dol",
+      "city": "Škofja Loka",
+      "postalCode": 4220,
+      "address": "Partizanska cesta 1",
+      "latitude": 46.1694,
+      "longitude": 14.3094,
+      "region": "Gorenjska",
+      "capacity": 75,
+      "phone": "+386 4 021 88 61",
+      "email": "info@zverca.si",
+      "established": "2003-07-17"
+    }
+  }
+]
