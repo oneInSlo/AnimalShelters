@@ -119,7 +119,7 @@
         </colors>
         <weightKg>31.0</weightKg>
         <neutered>true</neutered>
-        <adoptionFee>150</adoptionFee>
+        <adoptionFee></adoptionFee>
         <intakeDate>2021-06-18</intakeDate>
         <shelterId>S005</shelterId>
         <vaccinations>
