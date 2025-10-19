@@ -7,7 +7,7 @@ console.log("XML files successfully loaded.");
 console.log(`Shelters: ${shelters.length}, Animals: ${animals.length}, Events: ${events.length}`);
 
 // STEP 2: join data (already done in xmlStore.js via shelterId)
-console.log("\nAnimals (example linked data):");
+console.log("\nFirst 5 animals (example linked data):");
 console.table(
   animals.slice(0, 5).map((a) => ({
     ID: a.id,
@@ -24,9 +24,9 @@ const notNeutered = animals.filter(
     (a) => a.neutered === false
 );
 
-// Ex.02: all dogs with adoption fee under 20
+// Ex.02: all dogs with adoption fee under 100
 const cheapDogs = animals.filter(
-    (a) => (a.species === "Pes" && a.adoptionFee < 20)
+    (a) => (a.species === "Pes" && a.adoptionFee < 100)
 );
 
 // Ex.03: all events happening in Ljubljana
@@ -39,9 +39,9 @@ const filtered2 = cheapDogs;
 const filtered3 = ljubljanaEvents;
 
 // STEP 4: print data in console table 
-console.log("\nFiltered results:");
+console.log("\nFilter 1: Animals that are not neutered");
 console.table(
-  filtered1.map((a) => ({
+  notNeutered.map((a) => ({
     ID: a.id,
     Name: a.name,
     Species: a.species,
@@ -49,6 +49,30 @@ console.table(
     Fee: a.adoptionFee,
     Shelter: a.shelter?.name,
     City: a.shelter?.city,
+  }))
+);
+
+console.log("\nFilter 2: Dogs with adoption fee under 100€");
+console.table(
+  cheapDogs.map((a) => ({
+    ID: a.id,
+    Name: a.name,
+    Species: a.species,
+    Fee: a.adoptionFee,
+    Shelter: a.shelter?.name,
+    City: a.shelter?.city,
+  }))
+);
+
+console.log("\nFilter 3: Events happening in Ljubljana");
+console.table(
+  ljubljanaEvents.map((e) => ({
+    ID: e.id,
+    Title: e.title,
+    Date: e.date,
+    City: e.city,
+    Location: e.location,
+    Shelter: e.shelter?.name,
   }))
 );
 

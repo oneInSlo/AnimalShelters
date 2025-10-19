@@ -1,6 +1,71 @@
 <?xml version="1.0"?>
 <animals>
   <animal>
+    <id>C001</id>
+    <species>Mačka</species>
+    <name>Maks</name>
+    <breed>Domača kratkodlaka</breed>
+    <sex>Samec</sex>
+    <ageMonths>7</ageMonths>
+    <colors>Črna</colors>
+    <weightKg>3.1</weightKg>
+    <neutered>false</neutered>
+    <adoptionFee>40</adoptionFee>
+    <intakeDate>2024-03-12</intakeDate>
+    <vaccinations>FVRCP</vaccinations>
+    <microchip>981020004567890</microchip>
+    <temperament>Radoveden</temperament>
+    <temperament>Igračkast</temperament>
+    <shelterId>S002</shelterId>
+    <shelter>
+      <id>S002</id>
+      <name>Zavetišče Horjul</name>
+      <city>Horjul</city>
+      <postalCode>1354</postalCode>
+      <address>Smrečje 55</address>
+      <latitude>46.0136</latitude>
+      <longitude>14.2478</longitude>
+      <region>Osrednjeslovenska</region>
+      <capacity>70</capacity>
+      <phone>+386 5 130 44 35</phone>
+      <email>info@zavetisce-horjul.net</email>
+      <established>2004-11-11</established>
+    </shelter>
+  </animal>
+  <animal>
+    <id>C002</id>
+    <species>Mačka</species>
+    <name>Mici</name>
+    <breed>Domača dolgodlaka</breed>
+    <sex>Samica</sex>
+    <ageMonths>10</ageMonths>
+    <colors>Bela</colors>
+    <colors>Siva</colors>
+    <weightKg>2.8</weightKg>
+    <neutered>false</neutered>
+    <adoptionFee>35</adoptionFee>
+    <intakeDate>2023-09-29</intakeDate>
+    <vaccinations>FVRCP</vaccinations>
+    <microchip>981020006789012</microchip>
+    <temperament>Sramežljiva</temperament>
+    <temperament>Prijazna</temperament>
+    <shelterId>S004</shelterId>
+    <shelter>
+      <id>S004</id>
+      <name>Zavetišče za mačke Mačja Hiša</name>
+      <city>Celje</city>
+      <postalCode>3000</postalCode>
+      <address>Groharjeva ulica 8</address>
+      <latitude>46.2361</latitude>
+      <longitude>15.2675</longitude>
+      <region>Savinjska</region>
+      <capacity>90</capacity>
+      <phone>+386 4 093 79 59</phone>
+      <email>zavetisce@macjahisa.si</email>
+      <established>2001-10-02</established>
+    </shelter>
+  </animal>
+  <animal>
     <id>O001</id>
     <species>Zajec</species>
     <name>Kiki</name>
@@ -30,6 +95,136 @@
       <phone>+386 4 021 88 61</phone>
       <email>info@zverca.si</email>
       <established>2003-07-17</established>
+    </shelter>
+  </animal>
+  <animal>
+    <id>D005</id>
+    <species>Pes</species>
+    <name>Oto</name>
+    <breed>Mešanec</breed>
+    <sex>Samec</sex>
+    <ageMonths>9</ageMonths>
+    <colors>Rjava</colors>
+    <weightKg>8.4</weightKg>
+    <neutered>false</neutered>
+    <adoptionFee>70</adoptionFee>
+    <intakeDate>2023-09-22</intakeDate>
+    <vaccinations>besnoča</vaccinations>
+    <microchip>981020011234567</microchip>
+    <temperament>Aktiven</temperament>
+    <temperament>Prijazen</temperament>
+    <shelterId>S009</shelterId>
+    <shelter>
+      <id>S009</id>
+      <name>Zavetišče Johanca</name>
+      <city>Tolmin</city>
+      <postalCode>5220</postalCode>
+      <address>Trg Tigrovcev 1</address>
+      <latitude>46.1815</latitude>
+      <longitude>13.7277</longitude>
+      <region>Goriška</region>
+      <capacity>65</capacity>
+      <phone>+386 5 388 48 00</phone>
+      <email>zavetisce.johanca@gmail.com</email>
+      <established>2010-09-09</established>
+    </shelter>
+  </animal>
+  <animal>
+    <id>D006</id>
+    <species>Pes</species>
+    <name>Grom</name>
+    <breed>Haski</breed>
+    <sex>Samec</sex>
+    <ageMonths>30</ageMonths>
+    <colors>Siva</colors>
+    <colors>Bela</colors>
+    <weightKg>24</weightKg>
+    <neutered>false</neutered>
+    <adoptionFee>140</adoptionFee>
+    <intakeDate>2021-03-19</intakeDate>
+    <vaccinations>besnoča</vaccinations>
+    <vaccinations>distemper</vaccinations>
+    <microchip>981020013456789</microchip>
+    <temperament>Energičen</temperament>
+    <temperament>Samostojen</temperament>
+    <shelterId>S011</shelterId>
+    <shelter>
+      <id>S011</id>
+      <name>Zavetišče za male živali Sevnica</name>
+      <city>Sevnica</city>
+      <postalCode>8290</postalCode>
+      <address>Cesta na grad 14a</address>
+      <latitude>46.0107</latitude>
+      <longitude>15.3135</longitude>
+      <region>Posavje</region>
+      <capacity>30</capacity>
+      <phone>+386 7 816 02 10</phone>
+      <email>vet.post.sev@siol.net</email>
+      <established>2016-06-06</established>
+    </shelter>
+  </animal>
+  <animal>
+    <id>C005</id>
+    <species>Mačka</species>
+    <name>Pika</name>
+    <breed>Evropska</breed>
+    <sex>Samica</sex>
+    <ageMonths>5</ageMonths>
+    <colors>Tigrasta</colors>
+    <weightKg>2.1</weightKg>
+    <neutered>false</neutered>
+    <adoptionFee>30</adoptionFee>
+    <intakeDate>2023-10-01</intakeDate>
+    <vaccinations>FVRCP</vaccinations>
+    <microchip>981020015678901</microchip>
+    <temperament>Igračkasta</temperament>
+    <temperament>Radovedna</temperament>
+    <shelterId>S013</shelterId>
+    <shelter>
+      <id>S013</id>
+      <name>Zavetišče Meli</name>
+      <city>Trebnje</city>
+      <postalCode>8210</postalCode>
+      <address>Repče 10</address>
+      <latitude>45.8917</latitude>
+      <longitude>15.0144</longitude>
+      <region>Jugovzhodna Slovenija</region>
+      <capacity>60</capacity>
+      <phone>+386 3 133 13 36</phone>
+      <email>meli.center.repce@gmail.com</email>
+      <established>2005-04-05</established>
+    </shelter>
+  </animal>
+  <animal>
+    <id>D008</id>
+    <species>Pes</species>
+    <name>Jaka</name>
+    <breed>Mešanec</breed>
+    <sex>Samec</sex>
+    <ageMonths>11</ageMonths>
+    <colors>Bela</colors>
+    <weightKg>9.8</weightKg>
+    <neutered>false</neutered>
+    <adoptionFee>65</adoptionFee>
+    <intakeDate>2023-09-30</intakeDate>
+    <vaccinations>besnoča</vaccinations>
+    <microchip>981020016789012</microchip>
+    <temperament>Prijazen</temperament>
+    <temperament>Energičen</temperament>
+    <shelterId>S014</shelterId>
+    <shelter>
+      <id>S014</id>
+      <name>Zavetišče Zonzani</name>
+      <city>Dramlje</city>
+      <postalCode>3222</postalCode>
+      <address>Jarmovec 5</address>
+      <latitude>46.2908</latitude>
+      <longitude>15.366</longitude>
+      <region>Savinjska</region>
+      <capacity>90</capacity>
+      <phone>+386 3 749 06 00</phone>
+      <email>info@zonzani.si</email>
+      <established>2001-10-02</established>
     </shelter>
   </animal>
 </animals>

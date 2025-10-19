@@ -1,6 +1,7 @@
 # Node dependencies
 /backend/node_modules
 /frontend/animal-shelters-frontend/node_modules
+/backend/output
 
 # Logs
 *.log
