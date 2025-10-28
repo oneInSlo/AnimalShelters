@@ -17,7 +17,7 @@ async function scrapeHorjul() {
   console.log(`🌐 Opening: ${listUrl}`);
   await page.goto(listUrl, { waitUntil: "networkidle2" });
 
-  // 1️⃣ Collect animal links (title, href, and image)
+  // 1. Collect animal links (title, href, and image)
   const animals = await page.$$eval(".gbx__block", (els) =>
     els.map((el) => {
       const link = el.closest("[data-link]")?.getAttribute("data-link") || "";
@@ -31,7 +31,7 @@ async function scrapeHorjul() {
   console.log(`✅ Found ${animals.length} animals.`);
   const dataOut = [];
 
-  // 2️⃣ Scrape each animal page
+  // 2. Scrape each animal page
   for (const [i, animal] of animals.entries()) {
     console.log(`\n🔍 [${i + 1}/${animals.length}] Scraping ${animal.name || "(no name)"} → ${animal.link}`);
 
@@ -182,7 +182,7 @@ async function scrapeHorjul() {
     }
   }
 
-  // 3️⃣ Save data
+  // 3. Save data
   fs.writeFileSync("horjul_animals.json", JSON.stringify(dataOut, null, 2));
   console.log(`\n💾 Saved ${dataOut.length} animals to horjul.json`);
 

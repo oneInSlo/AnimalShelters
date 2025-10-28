@@ -6,14 +6,21 @@
     "breed": "Domača kratkodlaka",
     "sex": "Samec",
     "ageMonths": 7,
-    "colors": ["Črna"],
+    "colors": [
+      "Črna"
+    ],
     "weightKg": 3.1,
     "neutered": false,
     "adoptionFee": 40,
     "intakeDate": "2024-03-12",
-    "vaccinations": ["FVRCP"],
+    "vaccinations": [
+      "FVRCP"
+    ],
     "microchip": 981020004567890,
-    "temperament": ["Radoveden", "Igračkast"],
+    "temperament": [
+      "Radoveden",
+      "Igračkast"
+    ],
     "shelterId": "S002",
     "shelter": {
       "id": "S002",
@@ -37,14 +44,22 @@
     "breed": "Domača dolgodlaka",
     "sex": "Samica",
     "ageMonths": 10,
-    "colors": ["Bela", "Siva"],
+    "colors": [
+      "Bela",
+      "Siva"
+    ],
     "weightKg": 2.8,
     "neutered": false,
     "adoptionFee": 35,
     "intakeDate": "2023-09-29",
-    "vaccinations": ["FVRCP"],
+    "vaccinations": [
+      "FVRCP"
+    ],
     "microchip": 981020006789012,
-    "temperament": ["Sramežljiva", "Prijazna"],
+    "temperament": [
+      "Sramežljiva",
+      "Prijazna"
+    ],
     "shelterId": "S004",
     "shelter": {
       "id": "S004",
@@ -68,14 +83,21 @@
     "breed": "Pritlikavi",
     "sex": "Samica",
     "ageMonths": 8,
-    "colors": ["Bela"],
+    "colors": [
+      "Bela"
+    ],
     "weightKg": 1.1,
     "neutered": false,
     "adoptionFee": 20,
     "intakeDate": "2024-09-03",
-    "vaccinations": ["RV"],
+    "vaccinations": [
+      "RV"
+    ],
     "microchip": 981020008901234,
-    "temperament": ["Miren", "Radoveden"],
+    "temperament": [
+      "Miren",
+      "Radoveden"
+    ],
     "shelterId": "S006",
     "shelter": {
       "id": "S006",
@@ -99,14 +121,21 @@
     "breed": "Mešanec",
     "sex": "Samec",
     "ageMonths": 9,
-    "colors": ["Rjava"],
+    "colors": [
+      "Rjava"
+    ],
     "weightKg": 8.4,
     "neutered": false,
     "adoptionFee": 70,
     "intakeDate": "2023-09-22",
-    "vaccinations": ["besnoča"],
+    "vaccinations": [
+      "besnoča"
+    ],
     "microchip": 981020011234567,
-    "temperament": ["Aktiven", "Prijazen"],
+    "temperament": [
+      "Aktiven",
+      "Prijazen"
+    ],
     "shelterId": "S009",
     "shelter": {
       "id": "S009",
@@ -130,14 +159,23 @@
     "breed": "Haski",
     "sex": "Samec",
     "ageMonths": 30,
-    "colors": ["Siva", "Bela"],
+    "colors": [
+      "Siva",
+      "Bela"
+    ],
     "weightKg": 24,
     "neutered": false,
     "adoptionFee": 140,
     "intakeDate": "2021-03-19",
-    "vaccinations": ["besnoča", "distemper"],
+    "vaccinations": [
+      "besnoča",
+      "distemper"
+    ],
     "microchip": 981020013456789,
-    "temperament": ["Energičen", "Samostojen"],
+    "temperament": [
+      "Energičen",
+      "Samostojen"
+    ],
     "shelterId": "S011",
     "shelter": {
       "id": "S011",
@@ -161,14 +199,21 @@
     "breed": "Evropska",
     "sex": "Samica",
     "ageMonths": 5,
-    "colors": ["Tigrasta"],
+    "colors": [
+      "Tigrasta"
+    ],
     "weightKg": 2.1,
     "neutered": false,
     "adoptionFee": 30,
     "intakeDate": "2023-10-01",
-    "vaccinations": ["FVRCP"],
+    "vaccinations": [
+      "FVRCP"
+    ],
     "microchip": 981020015678901,
-    "temperament": ["Igračkasta", "Radovedna"],
+    "temperament": [
+      "Igračkasta",
+      "Radovedna"
+    ],
     "shelterId": "S013",
     "shelter": {
       "id": "S013",
@@ -192,14 +237,21 @@
     "breed": "Mešanec",
     "sex": "Samec",
     "ageMonths": 11,
-    "colors": ["Bela"],
+    "colors": [
+      "Bela"
+    ],
     "weightKg": 9.8,
     "neutered": false,
     "adoptionFee": 65,
     "intakeDate": "2023-09-30",
-    "vaccinations": ["besnoča"],
+    "vaccinations": [
+      "besnoča"
+    ],
     "microchip": 981020016789012,
-    "temperament": ["Prijazen", "Energičen"],
+    "temperament": [
+      "Prijazen",
+      "Energičen"
+    ],
     "shelterId": "S014",
     "shelter": {
       "id": "S014",
