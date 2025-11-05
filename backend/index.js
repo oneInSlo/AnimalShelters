@@ -17,7 +17,7 @@ const PORT = 4000;
 
 let DATA = loadData();
 
-const PX_URL = "	https://pxweb.stat.si/SiStatData/Resources/PX/Databases/Data/15P1201S.PX";
+const PX_URL = "https://pxweb.stat.si/SiStatData/Resources/PX/Databases/Data/15P1201S.PX";
 
 app.get("/api/animals", (req, res) => {
   const { species, city, neutered, maxFee, region } = req.query;
