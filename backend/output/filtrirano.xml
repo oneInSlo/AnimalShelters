@@ -1,100 +1,71 @@
 <?xml version="1.0"?>
 <animals>
   <animal>
-    <id>C001</id>
-    <species>Mačka</species>
-    <name>Maks</name>
-    <breed>Domača kratkodlaka</breed>
-    <sex>Samec</sex>
-    <ageMonths>7</ageMonths>
-    <colors>Črna</colors>
-    <weightKg>3.1</weightKg>
-    <neutered>false</neutered>
-    <adoptionFee>40</adoptionFee>
-    <intakeDate>2024-03-12</intakeDate>
-    <vaccinations>FVRCP</vaccinations>
-    <microchip>981020004567890</microchip>
-    <temperament>Radoveden</temperament>
-    <temperament>Igračkast</temperament>
-    <shelterId>S002</shelterId>
-    <shelter>
-      <id>S002</id>
-      <name>Zavetišče Horjul</name>
-      <city>Horjul</city>
-      <postalCode>1354</postalCode>
-      <address>Smrečje 55</address>
-      <latitude>46.0136</latitude>
-      <longitude>14.2478</longitude>
-      <region>Osrednjeslovenska</region>
-      <capacity>70</capacity>
-      <phone>+386 5 130 44 35</phone>
-      <email>info@zavetisce-horjul.net</email>
-      <established>2004-11-11</established>
-    </shelter>
-  </animal>
-  <animal>
-    <id>C002</id>
-    <species>Mačka</species>
-    <name>Mici</name>
-    <breed>Domača dolgodlaka</breed>
+    <id>D001</id>
+    <species>Pes</species>
+    <name>Luna</name>
+    <breed>Mešanec</breed>
     <sex>Samica</sex>
-    <ageMonths>10</ageMonths>
-    <colors>Bela</colors>
-    <colors>Siva</colors>
-    <weightKg>2.8</weightKg>
-    <neutered>false</neutered>
-    <adoptionFee>35</adoptionFee>
-    <intakeDate>2023-09-29</intakeDate>
-    <vaccinations>FVRCP</vaccinations>
-    <microchip>981020006789012</microchip>
-    <temperament>Sramežljiva</temperament>
+    <ageMonths>14</ageMonths>
+    <colors>Rjava</colors>
+    <weightKg>12.3</weightKg>
+    <neutered>true</neutered>
+    <adoptionFee>80</adoptionFee>
+    <intakeDate>2023-08-29</intakeDate>
+    <vaccinations>besnoča</vaccinations>
+    <vaccinations>distemper</vaccinations>
+    <vaccinations>parvovirus</vaccinations>
+    <microchip>981020003456789</microchip>
     <temperament>Prijazna</temperament>
-    <shelterId>S004</shelterId>
+    <temperament>Polna energije</temperament>
+    <shelterId>S001</shelterId>
     <shelter>
-      <id>S004</id>
-      <name>Zavetišče za mačke Mačja Hiša</name>
-      <city>Celje</city>
-      <postalCode>3000</postalCode>
-      <address>Groharjeva ulica 8</address>
-      <latitude>46.2361</latitude>
-      <longitude>15.2675</longitude>
-      <region>Savinjska</region>
-      <capacity>90</capacity>
-      <phone>+386 4 093 79 59</phone>
-      <email>zavetisce@macjahisa.si</email>
-      <established>2001-10-02</established>
+      <id>S001</id>
+      <name>Zavetišče za zapuščene živali Ljubljana</name>
+      <city>Ljubljana</city>
+      <postalCode>1000</postalCode>
+      <address>Gmajnice 30</address>
+      <latitude>46.0208</latitude>
+      <longitude>14.4423</longitude>
+      <region>Osrednjeslovenska</region>
+      <capacity>180</capacity>
+      <phone>+386 1 256 02 79</phone>
+      <email>info@zavetisce-lj.si</email>
+      <established>2002-10-04</established>
     </shelter>
   </animal>
   <animal>
-    <id>O001</id>
-    <species>Zajec</species>
-    <name>Kiki</name>
-    <breed>Pritlikavi</breed>
-    <sex>Samica</sex>
-    <ageMonths>8</ageMonths>
-    <colors>Bela</colors>
-    <weightKg>1.1</weightKg>
-    <neutered>false</neutered>
-    <adoptionFee>20</adoptionFee>
-    <intakeDate>2024-09-03</intakeDate>
-    <vaccinations>RV</vaccinations>
-    <microchip>981020008901234</microchip>
-    <temperament>Miren</temperament>
-    <temperament>Radoveden</temperament>
-    <shelterId>S006</shelterId>
+    <id>D003</id>
+    <species>Pes</species>
+    <name>Rex</name>
+    <breed>Nemški ovčar</breed>
+    <sex>Samec</sex>
+    <ageMonths>36</ageMonths>
+    <colors>Črna</colors>
+    <colors>Rjava</colors>
+    <weightKg>31</weightKg>
+    <neutered>true</neutered>
+    <adoptionFee>0</adoptionFee>
+    <intakeDate>2021-06-18</intakeDate>
+    <vaccinations>besnoča</vaccinations>
+    <vaccinations>distemper</vaccinations>
+    <microchip>981020007890123</microchip>
+    <temperament>Zvest</temperament>
+    <temperament>Opozorilen</temperament>
+    <shelterId>S005</shelterId>
     <shelter>
-      <id>S006</id>
-      <name>Zavetišče za mačke Mačji dol</name>
-      <city>Škofja Loka</city>
-      <postalCode>4220</postalCode>
-      <address>Partizanska cesta 1</address>
-      <latitude>46.1694</latitude>
-      <longitude>14.3094</longitude>
-      <region>Gorenjska</region>
-      <capacity>75</capacity>
-      <phone>+386 4 021 88 61</phone>
-      <email>info@zverca.si</email>
-      <established>2003-07-17</established>
+      <id>S005</id>
+      <name>Zavetišče za živali Mala Hiša</name>
+      <city>Moravske Toplice</city>
+      <postalCode>9226</postalCode>
+      <address>Lukačevci 17</address>
+      <latitude>46.6856</latitude>
+      <longitude>16.2208</longitude>
+      <region>Pomurje</region>
+      <capacity>90</capacity>
+      <phone>+386 3 173 27 00</phone>
+      <email>malahisa@siol.net</email>
+      <established>2001-10-02</established>
     </shelter>
   </animal>
   <animal>
@@ -130,72 +101,6 @@
     </shelter>
   </animal>
   <animal>
-    <id>D006</id>
-    <species>Pes</species>
-    <name>Grom</name>
-    <breed>Haski</breed>
-    <sex>Samec</sex>
-    <ageMonths>30</ageMonths>
-    <colors>Siva</colors>
-    <colors>Bela</colors>
-    <weightKg>24</weightKg>
-    <neutered>false</neutered>
-    <adoptionFee>140</adoptionFee>
-    <intakeDate>2021-03-19</intakeDate>
-    <vaccinations>besnoča</vaccinations>
-    <vaccinations>distemper</vaccinations>
-    <microchip>981020013456789</microchip>
-    <temperament>Energičen</temperament>
-    <temperament>Samostojen</temperament>
-    <shelterId>S011</shelterId>
-    <shelter>
-      <id>S011</id>
-      <name>Zavetišče za male živali Sevnica</name>
-      <city>Sevnica</city>
-      <postalCode>8290</postalCode>
-      <address>Cesta na grad 14a</address>
-      <latitude>46.0107</latitude>
-      <longitude>15.3135</longitude>
-      <region>Posavje</region>
-      <capacity>30</capacity>
-      <phone>+386 7 816 02 10</phone>
-      <email>vet.post.sev@siol.net</email>
-      <established>2016-06-06</established>
-    </shelter>
-  </animal>
-  <animal>
-    <id>C005</id>
-    <species>Mačka</species>
-    <name>Pika</name>
-    <breed>Evropska</breed>
-    <sex>Samica</sex>
-    <ageMonths>5</ageMonths>
-    <colors>Tigrasta</colors>
-    <weightKg>2.1</weightKg>
-    <neutered>false</neutered>
-    <adoptionFee>30</adoptionFee>
-    <intakeDate>2023-10-01</intakeDate>
-    <vaccinations>FVRCP</vaccinations>
-    <microchip>981020015678901</microchip>
-    <temperament>Igračkasta</temperament>
-    <temperament>Radovedna</temperament>
-    <shelterId>S013</shelterId>
-    <shelter>
-      <id>S013</id>
-      <name>Zavetišče Meli</name>
-      <city>Trebnje</city>
-      <postalCode>8210</postalCode>
-      <address>Repče 10</address>
-      <latitude>45.8917</latitude>
-      <longitude>15.0144</longitude>
-      <region>Jugovzhodna Slovenija</region>
-      <capacity>60</capacity>
-      <phone>+386 3 133 13 36</phone>
-      <email>meli.center.repce@gmail.com</email>
-      <established>2005-04-05</established>
-    </shelter>
-  </animal>
-  <animal>
     <id>D008</id>
     <species>Pes</species>
     <name>Jaka</name>
@@ -225,6 +130,39 @@
       <phone>+386 3 749 06 00</phone>
       <email>info@zonzani.si</email>
       <established>2001-10-02</established>
+    </shelter>
+  </animal>
+  <animal>
+    <id>D009</id>
+    <species>Pes</species>
+    <name>Aron</name>
+    <breed>Mešanec</breed>
+    <sex>Samec</sex>
+    <ageMonths>40</ageMonths>
+    <colors>Rjava</colors>
+    <weightKg>20.7</weightKg>
+    <neutered>true</neutered>
+    <adoptionFee>90</adoptionFee>
+    <intakeDate>2020-02-02</intakeDate>
+    <vaccinations>besnoča</vaccinations>
+    <vaccinations>distemper</vaccinations>
+    <microchip>981020017890123</microchip>
+    <temperament>Zvest</temperament>
+    <temperament>Prijazen</temperament>
+    <shelterId>S015</shelterId>
+    <shelter>
+      <id>S015</id>
+      <name>Arja, zavetišče za živali</name>
+      <city>Jesenice</city>
+      <postalCode>4270</postalCode>
+      <address>Cesta bratov Stražišarjev 7a</address>
+      <latitude>46.4333</latitude>
+      <longitude>14.0667</longitude>
+      <region>Gorenjska</region>
+      <capacity>40</capacity>
+      <phone/>
+      <email>info@zavetisce-jesenice.si</email>
+      <established>2007-02-14</established>
     </shelter>
   </animal>
 </animals>
