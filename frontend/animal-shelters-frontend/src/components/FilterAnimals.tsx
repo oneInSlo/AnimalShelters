@@ -14,16 +14,11 @@ import {
   Box,
   TableContainer,
   AppBar,
-  Toolbar,
-  IconButton,
-  Tooltip,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
 } from "@mui/material";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import PetsIcon from "@mui/icons-material/Pets";
 
 interface Animal {
   id: string;
@@ -101,9 +96,7 @@ export const FilterAnimals: React.FC = () => {
         body: JSON.stringify(filters),
       });
       const data = await res.json();
-      alert(
-        `Successfully exported! See map 'output' in ./backend.`
-      );
+      alert(`Successfully exported! See map 'output' in ./backend.`);
     } catch (err) {
       console.error("Export failed:", err);
       alert("Error exporting data. Check your console.");
@@ -113,10 +106,11 @@ export const FilterAnimals: React.FC = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#f1f5f9",
-        minHeight: "100vh",
         width: "100vw",
-        overflowX: "hidden",
+        minHeight: "100vh",
+        backgroundColor: "#f8f9fa",
+        color: "#212121",
+        py: 6,
       }}
     >
       {/* Header */}
@@ -125,25 +119,7 @@ export const FilterAnimals: React.FC = () => {
         sx={{
           background: "linear-gradient(90deg, #1565c0 0%, #42a5f5 100%)",
         }}
-      >
-        <Toolbar sx={{ mx: "auto", width: "95%" }}>
-          <PetsIcon sx={{ mr: 1 }} />
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 600 }}>
-            Slovenska zavetišča — Filtriranje živali
-          </Typography>
-          <Tooltip title="Ponastavi filtre in ponovno naloži">
-            <IconButton
-              color="inherit"
-              onClick={() => {
-                clearFilters();
-                fetchAnimals();
-              }}
-            >
-              <RefreshIcon />
-            </IconButton>
-          </Tooltip>
-        </Toolbar>
-      </AppBar>
+      ></AppBar>
 
       {/* Main full-width content */}
       <Box
@@ -366,4 +342,4 @@ export const FilterAnimals: React.FC = () => {
       </Box>
     </Box>
   );
-}
+};

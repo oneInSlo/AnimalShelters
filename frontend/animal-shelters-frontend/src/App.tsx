@@ -28,6 +28,9 @@ const Home: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        width: "100vw",
+        backgroundColor: "#f8f9fa",
+        py: 6,
       }}
     >
       <Container>

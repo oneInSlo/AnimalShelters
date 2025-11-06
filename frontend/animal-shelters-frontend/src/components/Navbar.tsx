@@ -13,12 +13,7 @@ export const Navbar: React.FC = () => {
           component="div"
           sx={{ display: "flex", alignItems: "center", gap: 1 }}
         >
-          <img
-            src="/logo.png"
-            alt="logo"
-            style={{ width: 40, height: 40, borderRadius: "50%" }}
-          />
-          Zavetišča in Živina
+          Slovenska zavetišča
         </Typography>
 
         <Box>
