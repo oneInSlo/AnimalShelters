@@ -12,9 +12,15 @@ import {
   Legend,
   type ChartOptions,
 } from "chart.js";
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Line, Bar, Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Box, Container, Typography, Grid, Paper } from "@mui/material";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+} from "react-simple-maps";
 
 ChartJS.register(
   CategoryScale,
@@ -32,21 +38,51 @@ ChartJS.register(
 interface LivestockEntry {
   num: string;
   "KATEGORIJE ŽIVINE": string;
-  "OBČINE": string;
-  "LETO": string;
-  "MERITVE": string;
+  OBČINE: string;
+  LETO: string;
+  MERITVE: string;
+}
+
+interface Shelter {
+  city: string;
+  latitude: number;
+  longitude: number;
 }
 
 const cleanName = (s: string) => s.replace(/^\s*\d+(\.\d+)*\s*/, "").trim();
 
 export const LivestockDashboard: React.FC = () => {
   const [rows, setRows] = useState<LivestockEntry[]>([]);
+  const [shelters, setShelters] = useState<Shelter[]>([]);
 
+  // --- Load livestock data ---
   useEffect(() => {
     fetch("http://localhost:4000/api/livestock")
       .then((r) => r.json())
       .then((j) => setRows(j.data))
       .catch((e) => console.error(e));
+  }, []);
+
+  // --- Load shelters.xml ---
+  useEffect(() => {
+    fetch("/assets/data/shelters.xml")
+      .then((r) => r.text())
+      .then((xmlText) => {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, "application/xml");
+        const nodes = Array.from(xml.getElementsByTagName("shelter"));
+        const parsed = nodes.map((n) => ({
+          city: n.getElementsByTagName("city")[0]?.textContent || "",
+          latitude: parseFloat(
+            n.getElementsByTagName("latitude")[0]?.textContent || "0"
+          ),
+          longitude: parseFloat(
+            n.getElementsByTagName("longitude")[0]?.textContent || "0"
+          ),
+        }));
+        setShelters(parsed);
+      })
+      .catch((e) => console.error("Error parsing XML:", e));
   }, []);
 
   const animals = useMemo(
@@ -55,49 +91,52 @@ export const LivestockDashboard: React.FC = () => {
   );
 
   const latestYear = useMemo(() => {
-    const years = Array.from(new Set(animals.map((d) => d["LETO"]))).map(Number);
+    const years = Array.from(new Set(animals.map((d) => d["LETO"]))).map(
+      Number
+    );
     return years.length ? Math.max(...years) : undefined;
   }, [animals]);
 
-  // === 1️⃣ Line Chart – Top 5 municipalities over time (without SLOVENIJA)
-  const top5Municipalities = useMemo(() => {
-    const map: Record<string, number> = {};
-    animals
-      .filter((d) => d["LETO"] === String(latestYear))
-      .filter((d) => d["OBČINE"] !== "SLOVENIJA")
-      .forEach((d) => {
-        const name = cleanName(d["OBČINE"]);
-        map[name] = (map[name] || 0) + Number(d.num);
-      });
-    return Object.entries(map)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-      .map(([m]) => m);
-  }, [animals, latestYear]);
+  // === Filter livestock only in municipalities that have shelters ===
+  const municipalitiesWithShelters = useMemo(
+    () => new Set(shelters.map((s) => s.city.toLowerCase())),
+    [shelters]
+  );
 
-  const municipalityTrends = useMemo(() => {
-    const series: Record<string, Record<string, number>> = {};
-    animals.forEach((d) => {
+  const animalsNearShelters = useMemo(
+    () =>
+      animals.filter((d) =>
+        municipalitiesWithShelters.has(cleanName(d["OBČINE"]).toLowerCase())
+      ),
+    [animals, municipalitiesWithShelters]
+  );
+
+  // === Line chart (Livestock in shelter municipalities over years) ===
+  const yearsSorted = Array.from(
+    new Set(animalsNearShelters.map((d) => d["LETO"]))
+  ).sort((a, b) => Number(a) - Number(b));
+
+  const trends = useMemo(() => {
+    const map: Record<string, Record<string, number>> = {};
+    animalsNearShelters.forEach((d) => {
       const m = cleanName(d["OBČINE"]);
-      if (!top5Municipalities.includes(m)) return;
       const y = d["LETO"];
       const n = Number(d.num);
-      if (!series[m]) series[m] = {};
-      series[m][y] = (series[m][y] || 0) + n;
+      if (!map[m]) map[m] = {};
+      map[m][y] = (map[m][y] || 0) + n;
     });
-    return series;
-  }, [animals, top5Municipalities]);
-
-  const yearsSorted = Array.from(new Set(animals.map((d) => d["LETO"])))
-    .sort((a, b) => Number(a) - Number(b));
+    return map;
+  }, [animalsNearShelters]);
 
   const lineData = {
     labels: yearsSorted,
-    datasets: Object.entries(municipalityTrends).map(([m, vals], i) => ({
+    datasets: Object.entries(trends).map(([m, vals], i) => ({
       label: m,
       data: yearsSorted.map((y) => vals[y] ?? 0),
-      borderColor: ["#e53935", "#43a047", "#fb8c00", "#8e24aa", "#00acc1"][i],
-      borderWidth: 1.8,
+      borderColor: ["#1976d2", "#d32f2f", "#388e3c", "#fbc02d", "#7b1fa2"][
+        i % 5
+      ],
+      borderWidth: 2,
       tension: 0.35,
       fill: false,
     })),
@@ -105,7 +144,7 @@ export const LivestockDashboard: React.FC = () => {
 
   const lineOptions: ChartOptions<"line"> = {
     plugins: {
-      legend: { position: "bottom", labels: { font: { size: 11 } } },
+      legend: { position: "bottom", labels: { font: { size: 12 } } },
     },
     scales: {
       x: { ticks: { font: { size: 10 } } },
@@ -113,7 +152,7 @@ export const LivestockDashboard: React.FC = () => {
     },
   };
 
-  // === 2️⃣ Bar – Top 10 municipalities (no SLOVENIJA)
+  // === Bar – Top 10 municipalities (no SLOVENIJA)
   const topMunicipalities = useMemo(() => {
     const map: Record<string, number> = {};
     animals.forEach((d) => {
@@ -155,7 +194,7 @@ export const LivestockDashboard: React.FC = () => {
     },
   };
 
-  // === 3️⃣ Pie – Structure by category (no SLOVENIJA, aggregated per municipality)
+  // === Pie – Structure by category (no SLOVENIJA, aggregated per municipality)
   const byCategory = useMemo(() => {
     const map: Record<string, number> = {};
     animals
@@ -188,14 +227,16 @@ export const LivestockDashboard: React.FC = () => {
     ],
   };
 
-
   const pieOptions: ChartOptions<"pie"> = {
     plugins: {
       legend: { position: "top", labels: { font: { size: 10 }, boxWidth: 16 } },
       datalabels: {
         color: "#fff",
         formatter: (val: number, ctx: any) => {
-          const total = (ctx?.dataset?.data as number[]).reduce((a, b) => a + b, 0);
+          const total = (ctx?.dataset?.data as number[]).reduce(
+            (a, b) => a + b,
+            0
+          );
           const pct = total ? (val / total) * 100 : 0;
           return `${pct.toFixed(1)}%`;
         },
@@ -204,147 +245,121 @@ export const LivestockDashboard: React.FC = () => {
     },
   };
 
-  // === 4️⃣ Extra chart – Category comparison (Top 5 municipalities)
-  const byCategoryTopMunicipalities = useMemo(() => {
-    const map: Record<string, Record<string, number>> = {};
-    animals
-      .filter((d) => top5Municipalities.includes(cleanName(d["OBČINE"])))
-      .filter((d) => (latestYear ? Number(d["LETO"]) === latestYear : true))
-      .forEach((d) => {
-        const cat = cleanName(d["KATEGORIJE ŽIVINE"]);
-        const m = cleanName(d["OBČINE"]);
-        if (!map[cat]) map[cat] = {};
-        map[cat][m] = (map[cat][m] || 0) + Number(d.num);
-      });
-    return map;
-  }, [animals, top5Municipalities, latestYear]);
+  // === Slovenia map (markers for shelters) ===
+  const geoUrl = "/assets/data/si.json";
 
-  const categoryBarData = {
-    labels: Object.keys(byCategoryTopMunicipalities),
-    datasets: top5Municipalities.map((m, i) => ({
-      label: m,
-      data: Object.keys(byCategoryTopMunicipalities).map(
-        (cat) => byCategoryTopMunicipalities[cat][m] || 0
-      ),
-      backgroundColor: [
-        "#e53935",
-        "#43a047",
-        "#fb8c00",
-        "#8e24aa",
-        "#00acc1",
-      ][i],
-    })),
-  };
-
-  const categoryBarOptions: ChartOptions<"bar"> = {
-    plugins: {
-      legend: { position: "top", labels: { font: { size: 10 } } },
-    },
-    scales: {
-      x: { ticks: { font: { size: 9 } } },
-      y: { ticks: { font: { size: 9 } }, beginAtZero: true },
-    },
-  };
-
-  // === 5️⃣ Extra chart – Average livestock per municipality
-  const avgPerMunicipality = useMemo(() => {
-    const map: Record<string, number[]> = {};
-    animals.forEach((d) => {
-      const m = cleanName(d["OBČINE"]);
-      if (m === "SLOVENIJA") return;
-      const n = Number(d.num);
-      if (!map[m]) map[m] = [];
-      map[m].push(n);
-    });
-    return Object.entries(map).map(([m, arr]) => [m, arr.reduce((a, b) => a + b, 0) / arr.length]);
-  }, [animals]);
-
-  const avgData = {
-    labels: avgPerMunicipality.map(([m]) => m as string).slice(0, 15),
-    datasets: [
-      {
-        label: "Povprečno število živali na občino",
-        data: avgPerMunicipality.map(([, v]) => v as number).slice(0, 15),
-        backgroundColor: "rgba(33,150,243,0.7)",
-      },
-    ],
-  };
-
-  const avgOptions: ChartOptions<"bar"> = {
-    plugins: {
-      legend: { display: false },
-    },
-    scales: {
-      x: { ticks: { font: { size: 9 } } },
-      y: { ticks: { font: { size: 9 } }, beginAtZero: true },
-    },
-  };
-
-  // === Render ===
   return (
     <Box
       sx={{
         width: "100vw",
         minHeight: "100vh",
-        backgroundColor: "#f8f9fa",
-        color: "#212121",
+        background: "linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%)",
         py: 6,
       }}
     >
       <Container maxWidth="xl">
-        {/* --- Introduction --- */}
-        <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
-          🐄 Statistika živine po občinah in letih
-        </Typography>
-        <Typography sx={{ mb: 4, color: "#424242" }}>
-          Ta analiza povezuje število živine po slovenskih občinah z delovanjem
-          živalskih zavetišč. Na območjih, kjer je več živine (npr. govedo, ovce,
-          koze), lahko zavetišča pripravijo posebne dogodke ali kampanje za
-          posvojitve delovnih psov in mačk, ki so primerni za kmetijska okolja
-          (npr. psi, ki čuvajo živino, ali mačke, ki zmanjšujejo populacijo
-          glodalcev). Vizualizacije spodaj pomagajo prepoznati regije, kjer bi
-          sodelovanje med kmeti in zavetišči lahko prineslo največ koristi.
-        </Typography>
-
-        {/* --- First chart --- */}
-        <Box sx={{ mb: 5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-            📈 Število živali po letih (vodilne občine)
+        {/* --- Intro --- */}
+        <Paper elevation={3} sx={{ p: 4, mb: 5, borderRadius: 3 }}>
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: 700, mb: 2, color: "#2e7d32" }}
+          >
+            🐄 Statistika živine v občinah z zavetišči
           </Typography>
-          <Line data={lineData} options={lineOptions} height={120} />
-        </Box>
+          <Typography sx={{ color: "#424242" }}>
+            Ta analiza prikazuje število živine v občinah, kjer se nahajajo
+            slovenska zavetišča za živali. Ti podatki pomagajo razumeti, kako
+            lahko zavetišča prilagodijo svoje programe glede na okolico – na
+            primer, kje so primerne kampanje za posvojitev delovnih psov ali
+            mačk za kmetije.
+          </Typography>
+        </Paper>
 
-        {/* --- Second + Third side by side --- */}
-        <Grid container spacing={4} sx={{ mb: 5 }}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-              🏙️ Top 10 občin z največ živine
-            </Typography>
-            <Bar data={barData} options={barOptions} height={180} />
+        {/* --- Map of Slovenia --- */}
+        <Paper elevation={3} sx={{ p: 3, mb: 6, borderRadius: 3 }}>
+          <Typography variant="h6" sx={{ mb: 2, color: "#1565c0" }}>
+            🗺️ Lokacije zavetišč in razpored živine
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <ComposableMap
+              projection="geoMercator"
+              projectionConfig={{ scale: 6500, center: [14.6, 46.2] }}
+              width={500}
+              height={300}
+            >
+              <Geographies geography={geoUrl}>
+                {({ geographies }: { geographies: any[] }) =>
+                  geographies.map((geo: any) => (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill="#e0e0e0"
+                      stroke="#bdbdbd"
+                    />
+                  ))
+                }
+              </Geographies>
+
+              {shelters.map((s, i) => (
+                <Marker key={i} coordinates={[s.longitude, s.latitude]}>
+                  <circle
+                    r={2.5}
+                    fill="#d32f2f"
+                    stroke="#fff"
+                    strokeWidth={1}
+                  />
+                  <text
+                    textAnchor="middle"
+                    y={-5}
+                    style={{
+                      fontFamily: "Arial",
+                      fontSize: "6px",
+                      fill: "#424242",
+                    }}
+                  >
+                    {s.city}
+                  </text>
+                </Marker>
+              ))}
+            </ComposableMap>
+          </Box>
+        </Paper>
+
+        {/* --- Line Chart --- */}
+        <Paper elevation={3} sx={{ p: 3, mb: 5, borderRadius: 3 }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+            📈 Število živali po letih (občine z zavetišči)
+          </Typography>
+          <Line data={lineData} options={lineOptions} height={100} />
+        </Paper>
+
+        {/* --- Bar + Pie Centered --- */}
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          alignItems="flex-start"
+          sx={{ mb: 6 }}
+        >
+          <Grid item xs={false} md={1} />
+          <Grid item xs={10} md={5}>
+            <Paper elevation={3} sx={{ p: 3, borderRadius: 3, mt: 13 }}>
+              <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+                🏙️ Top 10 občin z največ živine
+              </Typography>
+              <Bar data={barData} options={barOptions} height={180} />
+            </Paper>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-              🐖 Struktura živine po kategorijah ({latestYear})
-            </Typography>
-            <Pie data={pieData} options={pieOptions} height={200} />
+          <Grid item xs={10} md={5}>
+            <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
+              <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+                🐖 Struktura živine po kategorijah
+              </Typography>
+              <Pie data={pieData} options={pieOptions} height={200} />
+            </Paper>
           </Grid>
+          <Grid item xs={false} md={1} /> {/* right spacer */}
         </Grid>
-
-        {/* --- Fourth chart --- */}
-        <Box sx={{ mb: 5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-            🐕 Primerjava vrst živine v vodilnih občinah ({latestYear})
-          </Typography>
-          <Bar data={categoryBarData} options={categoryBarOptions} height={180} />
-        </Box>
-
-        {/* --- Fifth chart --- */}
-        <Box sx={{ mb: 5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-            📊 Povprečno število živali na občino
-          </Typography>
-          <Bar data={avgData} options={avgOptions} height={160} />
-        </Box>
       </Container>
     </Box>
   );

@@ -12,6 +12,7 @@ import {
   Card,
   CardMedia,
   CardContent,
+  Divider,
 } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
@@ -20,62 +21,90 @@ const Home: React.FC = () => {
   return (
     <Box
       sx={{
-        backgroundImage: "url('/animals-bg.jpg')",
+        position: "relative",
+        backgroundImage: "url('/assets/img/dog-wp.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        minHeight: "90vh",
-        color: "white",
+        minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
+        flexDirection: "column",
         justifyContent: "center",
+        color: "white",
         width: "100vw",
-        backgroundColor: "#f8f9fa",
-        py: 6,
       }}
     >
-      <Container>
+      {/* Overlay for readability */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          bgcolor: "rgba(0,0,0,0.45)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* MAIN CONTENT */}
+      <Container sx={{ position: "relative", zIndex: 2, textAlign: "center", mt: 20 }}>
         <Typography
           variant="h3"
-          align="center"
           gutterBottom
           sx={{
             fontWeight: "bold",
-            textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+            textShadow: "2px 2px 8px rgba(0,0,0,0.6)",
+            mb: 2,
           }}
         >
-          Dobrodošli v platformi za zavetišča in živinorejo
+          Slovenska zavetišča in živina
         </Typography>
+
         <Typography
           variant="h6"
-          align="center"
-          sx={{ mb: 6, textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
+          sx={{
+            mb: 8,
+            maxWidth: "1000px",
+            mx: "auto",
+            textShadow: "1px 1px 4px rgba(0,0,0,0.5)",
+          }}
         >
           Odkrijte podatke o živalih v slovenskih zavetiščih in analizirajte
           statistiko živine po občinah.
         </Typography>
 
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={4} justifyContent="center" alignItems="stretch">
+          {/* Zavetišča card */}
           <Grid item xs={12} md={5}>
             <Card
               sx={{
-                backgroundColor: "rgba(255,255,255,0.9)",
+                height: "100%",
+                backgroundColor: "rgba(255,255,255,0.95)",
                 borderRadius: 3,
-                textAlign: "center",
-                transition: "0.3s",
-                "&:hover": { transform: "scale(1.03)" },
+                boxShadow: 4,
+                transition: "transform 0.3s, box-shadow 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: 8,
+                },
               }}
             >
               <CardMedia
                 component="img"
-                height="200"
-                image="/animals-bg.jpg"
+                height="220"
+                image="/assets/img/dog.jpg"
                 alt="Zavetišča"
+                sx={{ objectFit: "cover" }}
               />
               <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{ fontWeight: 600, color: "text.primary" }}
+                >
                   🐕 Pregled zavetišč
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
                   Filtriraj in išči živali v slovenskih zavetiščih glede na
                   vrsto, spol, regijo in ceno posvojitve.
                 </Typography>
@@ -85,7 +114,7 @@ const Home: React.FC = () => {
                   component={Link}
                   to="/animals"
                   startIcon={<PetsIcon />}
-                  sx={{ mt: 2 }}
+                  sx={{ px: 3, py: 1 }}
                 >
                   Odpri zavetišča
                 </Button>
@@ -93,29 +122,40 @@ const Home: React.FC = () => {
             </Card>
           </Grid>
 
+          {/* Živina card */}
           <Grid item xs={12} md={5}>
             <Card
               sx={{
-                backgroundColor: "rgba(255,255,255,0.9)",
+                height: "100%",
+                backgroundColor: "rgba(255,255,255,0.95)",
                 borderRadius: 3,
-                textAlign: "center",
-                transition: "0.3s",
-                "&:hover": { transform: "scale(1.03)" },
+                boxShadow: 4,
+                transition: "transform 0.3s, box-shadow 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: 8,
+                },
               }}
             >
               <CardMedia
                 component="img"
-                height="200"
-                image="/livestock-bg.jpg"
+                height="220"
+                image="/assets/img/livestock.jpg"
                 alt="Živina"
+                sx={{ objectFit: "cover" }}
               />
               <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{ fontWeight: 600, color: "text.primary" }}
+                >
                   🐄 Statistika živine
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Vizualiziraj podatke o številu živine po občinah in letih.
-                  Uporabi grafične prikaze za analizo.
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                  Vizualiziraj podatke o številu živine po občinah in letih ter
+                  jih primerjaj z drugimi regijami s pomočjo interaktivnih
+                  grafov.
                 </Typography>
                 <Button
                   variant="contained"
@@ -123,7 +163,7 @@ const Home: React.FC = () => {
                   component={Link}
                   to="/livestock"
                   startIcon={<AgricultureIcon />}
-                  sx={{ mt: 2 }}
+                  sx={{ px: 3, py: 1 }}
                 >
                   Odpri živino
                 </Button>
@@ -131,6 +171,61 @@ const Home: React.FC = () => {
             </Card>
           </Grid>
         </Grid>
+
+        {/* FEATURES SECTION */}
+        <Box sx={{ py: 8, mt: 15 }}>
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{ fontWeight: "bold", mb: 6 }}
+          >
+            Kaj omogoča platforma?
+          </Typography>
+          <Grid container spacing={4} justifyContent="center">
+            {[
+              {
+                title: "Iskanje po zavetiščih",
+                desc: "Preiščite vse slovenske zavetišča in poiščite ljubljenčke po meri.",
+                icon: "🐶",
+              },
+              {
+                title: "Analiza živine",
+                desc: "Interaktivni grafi prikazujejo trende živinoreje po občinah in letih.",
+                icon: "📊",
+              },
+              {
+                title: "Povezani podatki",
+                desc: "Uporaba javnih odprtih podatkov OPSI in drugih virov za transparentnost.",
+                icon: "🔗",
+              },
+            ].map((f) => (
+              <Grid item xs={12} md={4} key={f.title}>
+                <Card
+                  sx={{
+                    textAlign: "center",
+                    p: 3,
+                    borderRadius: 3,
+                    backgroundColor: "rgba(255,255,255,0.95)",
+                    boxShadow: 3,
+                    transition: "0.3s",
+                    "&:hover": { boxShadow: 6, transform: "translateY(-4px)" },
+                  }}
+                >
+                  <Typography variant="h3" gutterBottom>
+                    {f.icon}
+                  </Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    {f.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {f.desc}
+                  </Typography>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Container>
     </Box>
   );

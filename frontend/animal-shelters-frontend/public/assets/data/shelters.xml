@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shelters>
+    <shelter id="S001" region="Osrednjeslovenska">
+        <name>Zavetišče za zapuščene živali Ljubljana</name>
+        <city>Ljubljana</city>
+        <postalCode>1000</postalCode>
+        <address>Gmajnice 30</address>
+        <latitude>46.0208</latitude>
+        <longitude>14.4423</longitude>
+        <capacity>180</capacity>
+        <phone>+386 1 256 02 79</phone>
+        <email>info@zavetisce-lj.si</email>
+        <established>2002-10-04</established>
+    </shelter>
+
+    <shelter id="S002" region="Osrednjeslovenska">
+        <name>Zavetišče Horjul</name>
+        <city>Horjul</city>
+        <postalCode>1354</postalCode>
+        <address>Smrečje 55</address>
+        <latitude>46.0136</latitude>
+        <longitude>14.2478</longitude>
+        <capacity>70</capacity>
+        <phone>+386 5 130 44 35</phone>
+        <email>info@zavetisce-horjul.net</email>
+        <established>2004-11-11</established>
+    </shelter>
+
+    <shelter id="S003" region="Podravska">
+        <name>Zavetišče Maribor</name>
+        <city>Maribor</city>
+        <postalCode>2000</postalCode>
+        <address>Avtomobilska ulica 25</address>
+        <latitude>46.5192</latitude>
+        <longitude>15.6761</longitude>
+        <capacity>120</capacity>
+        <phone>+386 2 480 16 60</phone>
+        <email>zavetisce.mb@snaga-mb.si</email>
+        <established>1999-03-21</established>
+    </shelter>
+
+    <shelter id="S004" region="Savinjska">
+        <name>Zavetišče za mačke Mačja Hiša</name>
+        <city>Celje</city>
+        <postalCode>3000</postalCode>
+        <address>Groharjeva ulica 8</address>
+        <latitude>46.2361</latitude>
+        <longitude>15.2675</longitude>
+        <capacity>90</capacity>
+        <phone>+386 4 093 79 59</phone>
+        <email>zavetisce@macjahisa.si</email>
+        <established>2001-10-02</established>
+    </shelter>
+
+    <shelter id="S005" region="Pomurje">
+        <name>Zavetišče za živali Mala Hiša</name>
+        <city>Moravske Toplice</city>
+        <postalCode>9226</postalCode>
+        <address>Lukačevci 17</address>
+        <latitude>46.6856</latitude>
+        <longitude>16.2208</longitude>
+        <capacity>90</capacity>
+        <phone>+386 3 173 27 00</phone>
+        <email>malahisa@siol.net</email>
+        <established>2001-10-02</established>
+    </shelter>
+
+    <shelter id="S006" region="Gorenjska">
+        <name>Zavetišče za mačke Mačji dol</name>
+        <city>Škofja Loka</city>
+        <postalCode>4220</postalCode>
+        <address>Partizanska cesta 1</address>
+        <latitude>46.1694</latitude>
+        <longitude>14.3094</longitude>
+        <capacity>75</capacity>
+        <phone>+386 4 021 88 61</phone>
+        <email>info@zverca.si</email>
+        <established>2003-07-17</established>
+    </shelter>
+
+    <shelter id="S007" region="Obala">
+        <name>Obalno zavetišče za živali</name>
+        <city>Pobegi</city>
+        <postalCode>6276</postalCode>
+        <address>Dvori 25</address>
+        <latitude>45.5217</latitude>
+        <longitude>13.8468</longitude>
+        <capacity>85</capacity>
+        <phone>+386 3 177 15 51</phone>
+        <email>zavetisce@marjeticakoper.si</email>
+        <established>2008-06-30</established>
+    </shelter>
+
+    <shelter id="S008" region="Goriška">
+        <name>Zavetišče in hotel za hišne živali Oskar</name>
+        <city>Šempas</city>
+        <postalCode>5261</postalCode>
+        <address>Vitovlje 37a</address>
+        <latitude>45.9328</latitude>
+        <longitude>13.7605</longitude>
+        <capacity>65</capacity>
+        <phone>+386 5 307 85 70</phone>
+        <email>info@zavetisceoskar.si</email>
+        <established>2010-09-09</established>
+    </shelter>
+
+    <shelter id="S009" region="Goriška">
+        <name>Zavetišče Johanca</name>
+        <city>Tolmin</city>
+        <postalCode>5220</postalCode>
+        <address>Trg Tigrovcev 1</address>
+        <latitude>46.1815</latitude>
+        <longitude>13.7277</longitude>
+        <capacity>65</capacity>
+        <phone>+386 5 388 48 00</phone>
+        <email>zavetisce.johanca@gmail.com</email>
+        <established>2010-09-09</established>
+    </shelter>
+    
+    <shelter id="S010" region="Posavje">
+        <name>Zavetišče za male živali Brežice</name>
+        <city>Brežice</city>
+        <postalCode>8250</postalCode>
+        <address>Prešernova cesta 17a</address>
+        <latitude>45.8991</latitude>
+        <longitude>15.5925</longitude>
+        <capacity>30</capacity>
+        <phone>+386 7 496 11 56</phone>
+        <email></email>
+        <established>2016-06-06</established>
+    </shelter>
+
+    <shelter id="S011" region="Posavje">
+        <name>Zavetišče za male živali Sevnica</name>
+        <city>Sevnica</city>
+        <postalCode>8290</postalCode>
+        <address>Cesta na grad 14a</address>
+        <latitude>46.0107</latitude>
+        <longitude>15.3135</longitude>
+        <capacity>30</capacity>
+        <phone>+386 7 816 02 10</phone>
+        <email>vet.post.sev@siol.net</email>
+        <established>2016-06-06</established>
+    </shelter>
+
+    <shelter id="S012" region="Jugovzhodna Slovenija">
+        <name>Zavetišče Turk</name>
+        <city>Novo mesto</city>
+        <postalCode>8000</postalCode>
+        <address>Zajčji vrh pri Stopičah 4</address>
+        <latitude>45.8030</latitude>
+        <longitude>15.1686</longitude>
+        <capacity>60</capacity>
+        <phone>+386 4 160 92 40</phone>
+        <email>rebeka.turk@gmail.com</email>
+        <established>2005-04-05</established>
+    </shelter>
+
+    <shelter id="S013" region="Jugovzhodna Slovenija">
+        <name>Zavetišče Meli</name>
+        <city>Trebnje</city>
+        <postalCode>8210</postalCode>
+        <address>Repče 10</address>
+        <latitude>45.8917</latitude>
+        <longitude>15.0144</longitude>
+        <capacity>60</capacity>
+        <phone>+386 3 133 13 36</phone>
+        <email>meli.center.repce@gmail.com</email>
+        <established>2005-04-05</established>
+    </shelter>
+
+    <shelter id="S014" region="Savinjska">
+        <name>Zavetišče Zonzani</name>
+        <city>Dramlje</city>
+        <postalCode>3222</postalCode>
+        <address>Jarmovec 5</address>
+        <latitude>46.2908</latitude>
+        <longitude>15.3660</longitude>
+        <capacity>90</capacity>
+        <phone>+386 3 749 06 00</phone>
+        <email>info@zonzani.si</email>
+        <established>2001-10-02</established>
+    </shelter>
+
+    <shelter id="S015" region="Gorenjska">
+        <name>Arja, zavetišče za živali</name>
+        <city>Jesenice</city>
+        <postalCode>4270</postalCode>
+        <address>Cesta bratov Stražišarjev 7a</address>
+        <latitude>46.4333</latitude>
+        <longitude>14.0667</longitude>
+        <capacity>40</capacity>
+        <phone></phone>
+        <email>info@zavetisce-jesenice.si</email>
+        <established>2007-02-14</established>
+    </shelter>
+</shelters>
