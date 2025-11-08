@@ -194,7 +194,7 @@ export const LivestockDashboard: React.FC = () => {
     },
   };
 
-  // === Pie – Structure by category (no SLOVENIJA, aggregated per municipality)
+  // === Pie – Structure by category (aggregated per municipality)
   const byCategory = useMemo(() => {
     const map: Record<string, number> = {};
     animals
@@ -259,19 +259,38 @@ export const LivestockDashboard: React.FC = () => {
     >
       <Container maxWidth="xl">
         {/* --- Intro --- */}
-        <Paper elevation={3} sx={{ p: 4, mb: 5, borderRadius: 3 }}>
+        <Paper
+          elevation={3}
+          sx={{ p: 4, mb: 5, borderRadius: 3, textAlign: "center" }}
+        >
           <Typography
             variant="h4"
             sx={{ fontWeight: 700, mb: 2, color: "#2e7d32" }}
           >
-            🐄 Statistika živine v občinah z zavetišči
+            Statistika živine v občinah z zavetišči
           </Typography>
-          <Typography sx={{ color: "#424242" }}>
-            Ta analiza prikazuje število živine v občinah, kjer se nahajajo
-            slovenska zavetišča za živali. Ti podatki pomagajo razumeti, kako
-            lahko zavetišča prilagodijo svoje programe glede na okolico – na
-            primer, kje so primerne kampanje za posvojitev delovnih psov ali
-            mačk za kmetije.
+          <Typography
+            sx={{ color: "#424242", fontSize: "1.05rem", lineHeight: 1.8 }}
+          >
+            Ta analiza povezuje podatke o številu živine v slovenskih občinah z
+            razporeditvijo živalskih zavetišč po državi. Glavni namen je
+            prikazati, kako lahko podatki o živinoreji in številu kmetijskih
+            živali pomagajo zavetiščem bolje razumeti okolje, v katerem
+            delujejo. V občinah z večjo koncentracijo goveda, prašičev,
+            perutnine ali drugih vrst živine se pojavlja tudi večje
+            povpraševanje po delovnih in čuvajskih psih ter mačkah, ki so
+            primerne za kmetijska okolja. Na teh območjih so zato posebej
+            smiselne kampanje za posvojitev živali, ki lahko pomagajo pri
+            varovanju kmetij, čredi ali zatiranju glodavcev.
+            <br />
+            <br />
+            Hkrati analiza omogoča primerjavo med posameznimi
+            občinami ter nudi vpogled v strukturo vrst živine po državi. S tem
+            se lahko zavetišča, lokalne skupnosti in kmetijska gospodarstva
+            povežejo pri oblikovanju trajnostnih rešitev – od skupnih
+            izobraževalnih programov do ciljno usmerjenih dogodkov za
+            posvojitve. Takšen pristop spodbuja povezovanje med mestnim in
+            podeželskim okoljem ter krepi odgovoren odnos do živali in narave.
           </Typography>
         </Paper>
 
