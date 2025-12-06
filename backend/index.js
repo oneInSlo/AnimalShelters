@@ -1,9 +1,14 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import iconv from "iconv-lite";
+import createLlmRoutes from "./llm/llm.js";
 import { loadData } from "./xmlStore.js";
 import { exportJson, exportXml } from "./utils/export.js";
 import { createRequire } from "module";
+import { grpcClient } from "./grpcClient.js";
 
 const app = express();
 app.use(cors());
@@ -18,6 +23,7 @@ const PORT = 4000;
 let DATA = loadData();
 
 const PX_URL = "https://pxweb.stat.si/SiStatData/Resources/PX/Databases/Data/15P1201S.PX";
+
 
 app.get("/api/animals", (req, res) => {
   const { species, city, neutered, maxFee, region } = req.query;
@@ -101,5 +107,69 @@ app.get("/api/livestock", async (req, res) => {
   }
 });
 
+// gRPC endpoints
+app.get("/api/grpc/shelters", (req, res) => {
+  grpcClient.ListShelters({}, (err, response) => {
+    if (err) {
+      console.error("gRPC error (ListShelters):", err);
+      return res.status(500).json({ error: "Napaka pri pridobivanju zavetišč." });
+    }
+    res.json(response.shelters);
+  });
+});
+
+app.get("/api/grpc/animals", (req, res) => {
+  grpcClient.ListAllAnimals({}, (err, response) => {
+    if (err) {
+      console.error("gRPC error (ListAllAnimals):", err);
+      return res.status(500).json({ error: "Napaka pri pridobivanju živali." });
+    }
+    res.json(response.animals);
+  });
+});
+
+app.get("/api/grpc/shelters/:id/animals", (req, res) => {
+  grpcClient.GetAnimalsByShelter(
+    { shelterId: req.params.id },
+    (err, response) => {
+      if (err) {
+        console.error("gRPC error (GetAnimalsByShelter):", err);
+        return res.status(500).json({ error: "Napaka pri pridobivanju živali za zavetišče." });
+      }
+      res.json(response.animals);
+    }
+  );
+});
+
+app.get("/api/grpc/animals/live", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.flushHeaders();
+
+  const stream = grpcClient.StreamAnimalUpdates({});
+
+  stream.on("data", (animal) => {
+    res.write(`data: ${JSON.stringify(animal)}\n\n`);
+  });
+
+  stream.on("end", () => {
+    res.write("event: end\ndata: Stream končan.\n\n");
+    res.end();
+  });
+
+  stream.on("error", (err) => {
+    console.error("gRPC streaming error:", err);
+    res.write(`event: error\ndata: Napaka v pretakanju.\n\n`);
+  });
+
+  req.on("close", () => {
+    stream.cancel();
+    res.end();
+  });
+});
+
+// LLM
+app.use("/api", createLlmRoutes(DATA));
 
 app.listen(PORT, () => console.log("--- Backend on http://localhost:4000"));

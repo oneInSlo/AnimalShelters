@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { FilterAnimals } from "./components/FilterAnimals";
 import { LivestockDashboard } from "./components/LivestockDashboard";
+import { GrpcAnimalsLive } from "./components/GrpcAnimalsLive";
+import { AnimalFitEvaluator } from "./components/AnimalFitEvaluator";
+
 import {
   Box,
   Container,
@@ -170,6 +173,101 @@ const Home: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
+
+          {/* gRPC card */}
+          <Grid item xs={12} md={5}>
+            <Card
+              sx={{
+                height: "100%",
+                backgroundColor: "rgba(255,255,255,0.95)",
+                borderRadius: 3,
+                boxShadow: 4,
+                transition: "transform 0.3s, box-shadow 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: 8,
+                },
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="220"
+                image="/assets/img/cat.jpg"
+                alt="Živina"
+                sx={{ objectFit: "cover" }}
+              />
+              <CardContent>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{ fontWeight: 600, color: "text.primary" }}
+                >
+                  🐈 gRPC podatkovna povezava
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                  Pridobi podatke o živalih prek gRPC protokola 
+                  in preveri posodobljene živali v realnem času.
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  component={Link}
+                  to="/grpc-live"
+                  startIcon={<PetsIcon />}
+                  sx={{ px: 3, py: 1 }}
+                >
+                  Odpri povezavo
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Animal fit card */}
+          <Grid item xs={12} md={5}>
+            <Card
+              sx={{
+                height: "100%",
+                backgroundColor: "rgba(255,255,255,0.95)",
+                borderRadius: 3,
+                boxShadow: 4,
+                transition: "transform 0.3s, box-shadow 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: 8,
+                },
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="220"
+                image="/assets/img/cat.jpg"
+                alt="Živina"
+                sx={{ objectFit: "cover" }}
+              />
+              <CardContent>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{ fontWeight: 600, color: "text.primary" }}
+                >
+                  🐈 gRPC podatkovna povezava
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                  Preveri povezanost tebe in živali.
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  component={Link}
+                  to="/animal-fit"
+                  startIcon={<PetsIcon />}
+                  sx={{ px: 3, py: 1 }}
+                >
+                  Odpri povezavo
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
 
         {/* FEATURES SECTION */}
@@ -239,6 +337,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/animals" element={<FilterAnimals />} />
         <Route path="/livestock" element={<LivestockDashboard />} />
+        <Route path="/grpc-live" element={<GrpcAnimalsLive />} />
+        <Route path="/animal-fit" element={<AnimalFitEvaluator />} />
       </Routes>
     </Router>
   );
