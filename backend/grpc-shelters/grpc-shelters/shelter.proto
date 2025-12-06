@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package shelters;
+
+// ------------------ COMPLEX TYPES ------------------
+
+message ColorList {
+  repeated string colors = 1;
+}
+
+message VaccinationList {
+  repeated string vaccines = 1;
+}
+
+message TemperamentList {
+  repeated string behaviors = 1;
+}
+
+message Microchip {
+  string number = 1;
+  string dateImplanted = 2;
+}
+
+// ------------------ ANIMAL ------------------
+
+message Animal {
+  string id = 1;
+  string name = 2;
+  string species = 3;
+  string breed = 4;
+  string sex = 5;
+
+  int32 ageMonths = 6;
+  float weightKg = 7;
+
+  bool neutered = 8;
+  int32 adoptionFee = 9; // lahko je null → Express backend tudi vrne null
+
+  string intakeDate = 10;
+  string shelterId = 11;
+
+  ColorList colors = 12;
+  VaccinationList vaccinations = 13;
+  Microchip microchip = 14;
+  TemperamentList temperament = 15;
+}
+
+// ------------------ SHELTER ------------------
+
+message Shelter {
+  string id = 1;
+  string region = 2;
+  string name = 3;
+  string city = 4;
+  string postalCode = 5;
+  string address = 6;
+
+  float latitude = 7;
+  float longitude = 8;
+
+  int32 capacity = 9;
+  string phone = 10;
+  string email = 11;
+  string established = 12;
+}
+
+// ------------------ REQUESTS & RESPONSES ------------------
+
+message Empty {}
+
+message ListAnimalsResponse {
+  repeated Animal animals = 1;
+}
+
+message GetAnimalsByShelterRequest {
+  string shelterId = 1;
+}
+
+message ListSheltersResponse {
+  repeated Shelter shelters = 1;
+}
+
+message AddAnimalRequest {
+  string shelterId = 1;
+  string name = 2;
+  string species = 3;
+  string breed = 4;
+  string sex = 5;
+  int32 ageMonths = 6;
+  float weightKg = 7;
+  bool neutered = 8;
+  int32 adoptionFee = 9;
+  string intakeDate = 10;
+
+  ColorList colors = 11;
+  VaccinationList vaccinations = 12;
+  Microchip microchip = 13;
+  TemperamentList temperament = 14;
+}
+
+message AddAnimalResponse {
+  string message = 1;
+}
+
+// ------------------ SERVICE ------------------
+
+service ShelterService {
+
+  // 1) NAVADEN RPC – seznam vseh zavetišč
+  rpc ListShelters(Empty) returns (ListSheltersResponse);
+
+  // 2) NAVADEN RPC – seznam vseh živali
+  rpc ListAllAnimals(Empty) returns (ListAnimalsResponse);
+
+  // 3) NAVADEN RPC – živali v zavetišču
+  rpc GetAnimalsByShelter(GetAnimalsByShelterRequest) returns (ListAnimalsResponse);
+
+  // 4) STREAMING RPC – nove ali posodobljene živali
+  rpc StreamAnimalUpdates(Empty) returns (stream Animal);
+
+  // 5) NAVADEN RPC – dodajanje živali
+  rpc AddAnimal(AddAnimalRequest) returns (AddAnimalResponse);
+}
