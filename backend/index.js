@@ -9,6 +9,7 @@ import { loadData } from "./xmlStore.js";
 import { exportJson, exportXml } from "./utils/export.js";
 import { createRequire } from "module";
 import { grpcClient } from "./grpcClient.js";
+import { sendPipeRequest } from "./pipes/pipeClient.js";
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,9 @@ let DATA = loadData();
 
 const PX_URL = "https://pxweb.stat.si/SiStatData/Resources/PX/Databases/Data/15P1201S.PX";
 
+app.get("/api/shelters", (req, res) => {
+  res.json(DATA.shelters);
+});
 
 app.get("/api/animals", (req, res) => {
   const { species, city, neutered, maxFee, region } = req.query;
@@ -171,5 +175,27 @@ app.get("/api/grpc/animals/live", (req, res) => {
 
 // LLM
 app.use("/api", createLlmRoutes(DATA));
+
+// Named Pipes
+app.get("/api/pipe/stats", async (req, res) => {
+  try {
+    const response = await sendPipeRequest({ command: "getStats" });
+    res.json(response);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
+app.get("/api/pipe/shelter/:id", async (req, res) => {
+  try {
+    const response = await sendPipeRequest({
+      command: "shelterOverview",
+      shelterId: req.params.id,
+    });
+    res.json(response);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
 
 app.listen(PORT, () => console.log("--- Backend on http://localhost:4000"));

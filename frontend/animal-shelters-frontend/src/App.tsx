@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
+import { NamedPipesDashboard } from "./components/NamedPipesDashboard";
 
 const Home: React.FC = () => {
   return (
@@ -50,7 +51,9 @@ const Home: React.FC = () => {
       />
 
       {/* MAIN CONTENT */}
-      <Container sx={{ position: "relative", zIndex: 2, textAlign: "center", mt: 20 }}>
+      <Container
+        sx={{ position: "relative", zIndex: 2, textAlign: "center", mt: 20 }}
+      >
         <Typography
           variant="h3"
           gutterBottom
@@ -76,7 +79,12 @@ const Home: React.FC = () => {
           statistiko živine po občinah.
         </Typography>
 
-        <Grid container spacing={4} justifyContent="center" alignItems="stretch">
+        <Grid
+          container
+          spacing={4}
+          justifyContent="center"
+          alignItems="stretch"
+        >
           {/* Zavetišča card */}
           <Grid item xs={12} md={5}>
             <Card
@@ -107,7 +115,11 @@ const Home: React.FC = () => {
                 >
                   🐕 Pregled zavetišč
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 3 }}
+                >
                   Filtriraj in išči živali v slovenskih zavetiščih glede na
                   vrsto, spol, regijo in ceno posvojitve.
                 </Typography>
@@ -155,7 +167,11 @@ const Home: React.FC = () => {
                 >
                   🐄 Statistika živine
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 3 }}
+                >
                   Vizualiziraj podatke o številu živine po občinah in letih ter
                   jih primerjaj z drugimi regijami s pomočjo interaktivnih
                   grafov.
@@ -204,9 +220,13 @@ const Home: React.FC = () => {
                 >
                   🐈 gRPC podatkovna povezava
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                  Pridobi podatke o živalih prek gRPC protokola 
-                  in preveri posodobljene živali v realnem času.
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 3 }}
+                >
+                  Pridobi podatke o živalih prek gRPC protokola in preveri
+                  posodobljene živali v realnem času.
                 </Typography>
                 <Button
                   variant="contained"
@@ -252,7 +272,11 @@ const Home: React.FC = () => {
                 >
                   🐈 gRPC podatkovna povezava
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 3 }}
+                >
                   Preveri povezanost tebe in živali.
                 </Typography>
                 <Button
@@ -260,6 +284,57 @@ const Home: React.FC = () => {
                   color="secondary"
                   component={Link}
                   to="/animal-fit"
+                  startIcon={<PetsIcon />}
+                  sx={{ px: 3, py: 1 }}
+                >
+                  Odpri povezavo
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Named pipes dashboard card */}
+          <Grid item xs={12} md={5}>
+            <Card
+              sx={{
+                height: "100%",
+                backgroundColor: "rgba(255,255,255,0.95)",
+                borderRadius: 3,
+                boxShadow: 4,
+                transition: "transform 0.3s, box-shadow 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: 8,
+                },
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="220"
+                image="/assets/img/cat.jpg"
+                alt="Živina"
+                sx={{ objectFit: "cover" }}
+              />
+              <CardContent>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{ fontWeight: 600, color: "text.primary" }}
+                >
+                  🐈 Named pipes
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 3 }}
+                >
+                  Preveri povezanost tebe in živali.
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  component={Link}
+                  to="/named-pipes"
                   startIcon={<PetsIcon />}
                   sx={{ px: 3, py: 1 }}
                 >
@@ -339,6 +414,7 @@ export default function App() {
         <Route path="/livestock" element={<LivestockDashboard />} />
         <Route path="/grpc-live" element={<GrpcAnimalsLive />} />
         <Route path="/animal-fit" element={<AnimalFitEvaluator />} />
+        <Route path="/named-pipes" element={<NamedPipesDashboard />} />
       </Routes>
     </Router>
   );

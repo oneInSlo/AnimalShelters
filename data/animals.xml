@@ -402,4 +402,462 @@
             <behavior>Prijazen</behavior>
         </temperament>
     </animal>
+
+        <animal id="C006" species="Mačka">
+        <name>Nori</name>
+        <breed>Sfinga</breed>
+        <sex>Samec</sex>
+        <ageMonths>16</ageMonths>
+        <colors>
+            <color>Bež</color>
+        </colors>
+        <weightKg>2.9</weightKg>
+        <neutered>true</neutered>
+        <adoptionFee>95</adoptionFee>
+        <intakeDate>2023-11-12</intakeDate>
+        <shelterId>S003</shelterId>
+        <vaccinations>
+            <vaccine>FVRCP</vaccine>
+            <vaccine>rabies</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020018901234</number>
+            <dateImplanted>2023-11-13</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Zelo družaben</behavior>
+            <behavior>Ne mara hrupa</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="D010" species="Pes">
+        <name>Atlas</name>
+        <breed>Rotvajler</breed>
+        <sex>Samec</sex>
+        <ageMonths>48</ageMonths>
+        <colors>
+            <color>Črna</color>
+            <color>Rjava</color>
+        </colors>
+        <weightKg>42.5</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>160</adoptionFee>
+        <intakeDate>2020-10-18</intakeDate>
+        <shelterId>S001</shelterId>
+        <vaccinations>
+            <vaccine>besnoča</vaccine>
+            <vaccine>distemper</vaccine>
+            <vaccine>hepatitis</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020019012345</number>
+            <dateImplanted>2020-10-20</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Zaščitniški</behavior>
+            <behavior>Močna energija</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="O002" species="Zajec">
+        <name>Bela</name>
+        <breed>Lionski</breed>
+        <sex>Samica</sex>
+        <ageMonths>6</ageMonths>
+        <colors>
+            <color>Bela</color>
+            <color>Siva</color>
+        </colors>
+        <weightKg>1.4</weightKg>
+        <neutered>true</neutered>
+        <adoptionFee>25</adoptionFee>
+        <intakeDate>2024-11-01</intakeDate>
+        <shelterId>S009</shelterId>
+        <vaccinations>
+            <vaccine>RV</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020020123456</number>
+            <dateImplanted>2024-11-03</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Miren</behavior>
+            <behavior>Plašen</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="C007" species="Mačka">
+        <name>Fiona</name>
+        <breed>Britanska kratkodlaka</breed>
+        <sex>Samica</sex>
+        <ageMonths>28</ageMonths>
+        <colors>
+            <color>Modra</color>
+        </colors>
+        <weightKg>4.2</weightKg>
+        <neutered>true</neutered>
+        <adoptionFee>75</adoptionFee>
+        <intakeDate>2022-06-22</intakeDate>
+        <shelterId>S012</shelterId>
+        <vaccinations>
+            <vaccine>FVRCP</vaccine>
+            <vaccine>rabies</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020021234567</number>
+            <dateImplanted>2022-06-25</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Umirjena</behavior>
+            <behavior>Dostojanstvena</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="D011" species="Pes">
+        <name>Zara</name>
+        <breed>Španjel</breed>
+        <sex>Samica</sex>
+        <ageMonths>14</ageMonths>
+        <colors>
+            <color>Rjava</color>
+        </colors>
+        <weightKg>9.9</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>85</adoptionFee>
+        <intakeDate>2023-10-12</intakeDate>
+        <shelterId>S004</shelterId>
+        <vaccinations>
+            <vaccine>distemper</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020022345678</number>
+            <dateImplanted>2023-10-13</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Igračka</behavior>
+            <behavior>Mila</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="B001" species="Papiga">
+        <name>Rio</name>
+        <breed>Ara</breed>
+        <sex>Samec</sex>
+        <ageMonths>60</ageMonths>
+        <colors>
+            <color>Modra</color>
+            <color>Rumena</color>
+        </colors>
+        <weightKg>1.0</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>200</adoptionFee>
+        <intakeDate>2020-01-14</intakeDate>
+        <shelterId>S006</shelterId>
+        <vaccinations>
+            <vaccine>PBFD</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020023456789</number>
+            <dateImplanted>2020-01-17</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Glasen</behavior>
+            <behavior>Družaben</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="H001" species="Hrček">
+        <name>Lili</name>
+        <breed>Zlati hrček</breed>
+        <sex>Samica</sex>
+        <ageMonths>4</ageMonths>
+        <colors>
+            <color>Zlata</color>
+        </colors>
+        <weightKg>0.15</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>10</adoptionFee>
+        <intakeDate>2024-12-02</intakeDate>
+        <shelterId>S010</shelterId>
+        <temperament>
+            <behavior>Radovedna</behavior>
+            <behavior>Hitro premikajoča</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="D012" species="Pes">
+        <name>Kira</name>
+        <breed>Mešanec</breed>
+        <sex>Samica</sex>
+        <ageMonths>7</ageMonths>
+        <colors>
+            <color>Bela</color>
+            <color>Črna</color>
+        </colors>
+        <weightKg>6.1</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>60</adoptionFee>
+        <intakeDate>2024-07-28</intakeDate>
+        <shelterId>S013</shelterId>
+        <vaccinations>
+            <vaccine>besnoča</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020024567890</number>
+            <dateImplanted>2024-08-01</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Igračkasta</behavior>
+            <behavior>Pogumna</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="C008" species="Mačka">
+        <name>Leon</name>
+        <breed>Evropska</breed>
+        <sex>Samec</sex>
+        <ageMonths>18</ageMonths>
+        <colors>
+            <color>Siva</color>
+            <color>Bela</color>
+        </colors>
+        <weightKg>3.7</weightKg>
+        <neutered>true</neutered>
+        <adoptionFee>50</adoptionFee>
+        <intakeDate>2023-02-10</intakeDate>
+        <shelterId>S015</shelterId>
+        <vaccinations>
+            <vaccine>FVRCP</vaccine>
+            <vaccine>rabies</vaccine>
+        </vaccinations>
+        <microchip>
+            <number>981020025678901</number>
+            <dateImplanted>2023-02-12</dateImplanted>
+        </microchip>
+        <temperament>
+            <behavior>Družaben</behavior>
+            <behavior>Mirno spi</behavior>
+        </temperament>
+    </animal>
+
+        <animal id="D013" species="Pes">
+        <name>Milo</name>
+        <breed>Koder</breed>
+        <sex>Samec</sex>
+        <ageMonths>8</ageMonths>
+        <colors>
+            <color>Bela</color>
+        </colors>
+        <weightKg>7.2</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>95</adoptionFee>
+        <intakeDate>2024-09-11</intakeDate>
+        <shelterId>S002</shelterId>
+        <vaccinations>
+            <vaccine>besnoča</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Igračkast</behavior>
+            <behavior>Zelo pameten</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="C009" species="Mačka">
+        <name>Lola</name>
+        <breed>Domača kratkodlaka</breed>
+        <sex>Samica</sex>
+        <ageMonths>4</ageMonths>
+        <colors>
+            <color>Črna</color>
+        </colors>
+        <weightKg>1.7</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>25</adoptionFee>
+        <intakeDate>2024-10-02</intakeDate>
+        <shelterId>S001</shelterId>
+        <vaccinations>
+            <vaccine>FVRCP</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Plašna</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="D014" species="Pes">
+        <name>Kaj</name>
+        <breed>Mešanec</breed>
+        <sex>Samec</sex>
+        <ageMonths>52</ageMonths>
+        <colors>
+            <color>Rjav</color>
+        </colors>
+        <weightKg>29.0</weightKg>
+        <neutered>true</neutered>
+        <adoptionFee>50</adoptionFee>
+        <intakeDate>2021-05-18</intakeDate>
+        <shelterId>S003</shelterId>
+        <vaccinations>
+            <vaccine>besnoča</vaccine>
+            <vaccine>parvovirus</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Mirnega značaja</behavior>
+            <behavior>Zvest</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="C010" species="Mačka">
+        <name>Simba</name>
+        <breed>Maine Coon</breed>
+        <sex>Samec</sex>
+        <ageMonths>30</ageMonths>
+        <colors>
+            <color>Rjav</color>
+            <color>Krem</color>
+        </colors>
+        <weightKg>6.2</weightKg>
+        <neutered>true</neutered>
+        <adoptionFee>140</adoptionFee>
+        <intakeDate>2022-12-11</intakeDate>
+        <shelterId>S005</shelterId>
+        <vaccinations>
+            <vaccine>FVRCP</vaccine>
+            <vaccine>rabies</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Družaben</behavior>
+            <behavior>Zelo vokalen</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="D015" species="Pes">
+        <name>Timi</name>
+        <breed>Jack Russell</breed>
+        <sex>Samec</sex>
+        <ageMonths>14</ageMonths>
+        <colors>
+            <color>Bela</color>
+            <color>Rjava</color>
+        </colors>
+        <weightKg>6.8</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>85</adoptionFee>
+        <intakeDate>2024-06-09</intakeDate>
+        <shelterId>S006</shelterId>
+        <vaccinations>
+            <vaccine>distemper</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Energičen</behavior>
+            <behavior>Lovski nagon</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="C011" species="Mačka">
+        <name>Oreo</name>
+        <breed>Domača kratkodlaka</breed>
+        <sex>Samec</sex>
+        <ageMonths>11</ageMonths>
+        <colors>
+            <color>Črno-bela</color>
+        </colors>
+        <weightKg>3.4</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>35</adoptionFee>
+        <intakeDate>2023-10-22</intakeDate>
+        <shelterId>S010</shelterId>
+        <vaccinations>
+            <vaccine>FVRCP</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Igračkast</behavior>
+            <behavior>Radoveden</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="D016" species="Pes">
+        <name>Thor</name>
+        <breed>Husky</breed>
+        <sex>Samec</sex>
+        <ageMonths>60</ageMonths>
+        <colors>
+            <color>Siva</color>
+            <color>Bela</color>
+        </colors>
+        <weightKg>28.0</weightKg>
+        <neutered>true</neutered>
+        <adoptionFee>150</adoptionFee>
+        <intakeDate>2020-03-19</intakeDate>
+        <shelterId>S012</shelterId>
+        <vaccinations>
+            <vaccine>besnoča</vaccine>
+            <vaccine>distemper</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Samostojen</behavior>
+            <behavior>Zelo aktiven</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="B002" species="Papiga">
+        <name>Mango</name>
+        <breed>Rosella</breed>
+        <sex>Samica</sex>
+        <ageMonths>36</ageMonths>
+        <colors>
+            <color>Rdeča</color>
+            <color>Modra</color>
+        </colors>
+        <weightKg>0.9</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>170</adoptionFee>
+        <intakeDate>2022-04-11</intakeDate>
+        <shelterId>S007</shelterId>
+        <vaccinations>
+            <vaccine>PBFD</vaccine>
+        </vaccinations>
+        <temperament>
+            <behavior>Govori</behavior>
+            <behavior>Socialna</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="T001" species="Želva">
+        <name>Shellby</name>
+        <breed>Rdečevratka</breed>
+        <sex>Samica</sex>
+        <ageMonths>120</ageMonths>
+        <colors>
+            <color>Zelena</color>
+        </colors>
+        <weightKg>1.8</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>45</adoptionFee>
+        <intakeDate>2014-08-05</intakeDate>
+        <shelterId>S008</shelterId>
+        <temperament>
+            <behavior>Počasna</behavior>
+            <behavior>Mirna</behavior>
+        </temperament>
+    </animal>
+
+    <animal id="G001" species="Morski prašiček">
+        <name>Čoko</name>
+        <breed>Perujski</breed>
+        <sex>Samec</sex>
+        <ageMonths>10</ageMonths>
+        <colors>
+            <color>Rjav</color>
+            <color>Bela</color>
+        </colors>
+        <weightKg>1.0</weightKg>
+        <neutered>false</neutered>
+        <adoptionFee>20</adoptionFee>
+        <intakeDate>2024-04-20</intakeDate>
+        <shelterId>S014</shelterId>
+        <temperament>
+            <behavior>Prijazen</behavior>
+            <behavior>Sramežljiv</behavior>
+        </temperament>
+    </animal>
 </animals>
