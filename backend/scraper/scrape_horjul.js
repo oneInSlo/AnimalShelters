@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
+import path from "path";
 
 async function scrapeHorjul() {
   const base = "https://www.zavetisce-horjul.net";
@@ -183,8 +184,9 @@ async function scrapeHorjul() {
   }
 
   // 3. Save data
-  fs.writeFileSync("horjul_animals.json", JSON.stringify(dataOut, null, 2));
-  console.log(`\n💾 Saved ${dataOut.length} animals to horjul.json`);
+  const outPath = path.resolve("scraper", "horjul_animals.json");
+  fs.writeFileSync(outPath, JSON.stringify(dataOut, null, 2));
+  console.log(`\n💾 Saved ${dataOut.length} animals to ${outPath}`);
 
   await browser.close();
 }

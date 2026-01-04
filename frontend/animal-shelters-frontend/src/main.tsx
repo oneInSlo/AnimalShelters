@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "leaflet/dist/leaflet.css";
 import './index.css'
 import App from './App.tsx'
 

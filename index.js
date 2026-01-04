@@ -2,23 +2,18 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-import fs from "fs";
-import path from "path";
 import cors from "cors";
 import iconv from "iconv-lite";
 import createLlmRoutes from "./llm/llm.js";
-import createMapsRoutes from "./maps/maps.js";
-import { spawn } from "child_process";
-import { createRequire } from "module";
 import { loadData } from "./xmlStore.js";
+import { exportJson, exportXml } from "./utils/export.js";
+import { createRequire } from "module";
 import { grpcClient } from "./grpcClient.js";
 import { sendPipeRequest } from "./pipes/pipeClient.js";
-import { exportJson, exportXml } from "./utils/export.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use("/api", createMapsRoutes({ getData: () => DATA }));
 
 const require = createRequire(import.meta.url);
 global._ = require("underscore");
@@ -29,12 +24,6 @@ const PORT = 4000;
 let DATA = loadData();
 
 const PX_URL = "https://pxweb.stat.si/SiStatData/Resources/PX/Databases/Data/15P1201S.PX";
-
-let horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: null };
-
-const HORJUL_JSON_PATH = path.resolve("scraper/horjul_animals.json");
-const HORJUL_SCRIPT_PATH = path.resolve("scraper/scrape_horjul.js");
-
 
 app.get("/api/shelters", (req, res) => {
   res.json(DATA.shelters);
@@ -208,109 +197,5 @@ app.get("/api/pipe/shelter/:id", async (req, res) => {
     res.status(500).json({ error: err });
   }
 });
-
-// MAPS
-// OSM: geocode generic query
-app.get("/api/osm/geocode", async (req, res) => {
-  try {
-    const q = String(req.query.q || "").trim();
-    if (!q) return res.status(400).json({ error: "Missing q" });
-    const result = await nominatimSearch(q);
-    res.json({ query: q, result });
-  } catch (e) {
-    console.error("OSM geocode error:", e.message);
-    res.status(500).json({ error: "Failed to geocode" });
-  }
-});
-
-// OSM: enrich shelters with coords (uses XML + geocode when needed)
-app.get("/api/osm/shelters-enriched", async (req, res) => {
-  try {
-    const shelters = DATA.shelters;
-
-    const enriched = [];
-    for (const s of shelters) {
-      let lat = Number(s.latitude);
-      let lon = Number(s.longitude);
-
-      if (!lat || !lon) {
-        const q = `${s.address}, ${s.postalCode} ${s.city}, Slovenia`;
-        const geo = await nominatimSearch(q);
-        if (geo) {
-          lat = geo.lat;
-          lon = geo.lon;
-        }
-      }
-
-      enriched.push({ ...s, lat, lon });
-    }
-
-    res.json(enriched);
-  } catch (e) {
-    console.error("OSM shelters-enriched error:", e.message);
-    res.status(500).json({ error: "Failed to enrich shelters" });
-  }
-});
-
-// events (from .xml)
-app.get("/api/events", (req, res) => {
-  res.json(DATA.events);
-});
-
-// scraper
-app.get("/api/horjul", (req, res) => {
-  try {
-    const exists = fs.existsSync(HORJUL_JSON_PATH);
-    const data = exists ? JSON.parse(fs.readFileSync(HORJUL_JSON_PATH, "utf-8")) : [];
-    res.json({
-      meta: {
-        running: horjulJob.running,
-        lastUpdated: horjulJob.lastUpdated,
-        lastCount: horjulJob.lastCount,
-        lastError: horjulJob.lastError,
-      },
-      data,
-    });
-  } catch (e) {
-    res.status(500).json({ error: "Failed to read horjul_animals.json" });
-  }
-});
-
-app.get("/api/horjul/status", (req, res) => {
-  res.json(horjulJob);
-});
-
-app.post("/api/horjul/refresh", (req, res) => {
-  if (horjulJob.running) return res.status(409).json({ error: "Scrape already running" });
-
-  horjulJob = { running: true, lastUpdated: horjulJob.lastUpdated, lastCount: horjulJob.lastCount, lastError: null };
-  console.log("🟡 Horjul scrape started...");
-
-  const child = spawn("node", [HORJUL_SCRIPT_PATH], { stdio: "inherit" });
-
-  child.on("close", () => {
-    try {
-      const data = JSON.parse(fs.readFileSync(HORJUL_JSON_PATH, "utf-8"));
-      horjulJob = {
-        running: false,
-        lastUpdated: new Date().toISOString(),
-        lastCount: Array.isArray(data) ? data.length : 0,
-        lastError: null,
-      };
-      console.log("🟢 Horjul scrape finished. Count:", horjulJob.lastCount);
-    } catch (e) {
-      horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: "Failed to parse output JSON" };
-      console.log("🔴 Horjul scrape finished with error:", horjulJob.lastError);
-    }
-  });
-
-  child.on("error", (e) => {
-    horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: e.message };
-    console.log("🔴 Horjul scrape process error:", e.message);
-  });
-
-  res.status(202).json({ message: "Scrape started" });
-});
-
 
 app.listen(PORT, () => console.log("--- Backend on http://localhost:4000"));

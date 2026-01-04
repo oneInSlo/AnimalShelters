@@ -3,10 +3,11 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import PetsIcon from "@mui/icons-material/Pets";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
+import { Filter, Help, Notifications } from "@mui/icons-material";
 
 export const Navbar: React.FC = () => {
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" sx={{ backgroundColor: "#9c27b0" }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography
           variant="h6"
@@ -28,7 +29,7 @@ export const Navbar: React.FC = () => {
           <Button
             color="inherit"
             component={RouterLink}
-            to="/animals"
+            to="/overview"
             startIcon={<PetsIcon />}
             sx={{ marginRight: 2 }}
           >
@@ -37,10 +38,37 @@ export const Navbar: React.FC = () => {
           <Button
             color="inherit"
             component={RouterLink}
+            to="/live-animals"
+            startIcon={<Notifications />}
+            sx={{ marginRight: 2 }}
+          >
+            Aktualne živali
+          </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/animals"
+            startIcon={<Filter />}
+            sx={{ marginRight: 2 }}
+          >
+            Filtriranje
+          </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/animal-fit"
+            startIcon={<Help />}
+            sx={{ marginRight: 2 }}
+          >
+            AI pomoč
+          </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
             to="/livestock"
             startIcon={<AgricultureIcon />}
           >
-            Živina
+            Statistika živine
           </Button>
         </Box>
       </Toolbar>

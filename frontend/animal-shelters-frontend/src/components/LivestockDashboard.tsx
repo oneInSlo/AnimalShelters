@@ -15,12 +15,12 @@ import {
 import { Line, Bar, Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Box, Container, Typography, Grid, Paper } from "@mui/material";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker,
-} from "react-simple-maps";
+// import {
+//   ComposableMap,
+//   Geographies,
+//   Geography,
+//   Marker,
+// } from "react-simple-maps";
 
 ChartJS.register(
   CategoryScale,
@@ -245,8 +245,8 @@ export const LivestockDashboard: React.FC = () => {
     },
   };
 
-  // === Slovenia map (markers for shelters) ===
-  const geoUrl = "/assets/data/si.json";
+  // // === Slovenia map (markers for shelters) ===
+  // const geoUrl = "/assets/data/si.json";
 
   return (
     <Box
@@ -294,7 +294,7 @@ export const LivestockDashboard: React.FC = () => {
           </Typography>
         </Paper>
 
-        {/* --- Map of Slovenia --- */}
+        {/* --- Map of Slovenia ---
         <Paper elevation={3} sx={{ p: 3, mb: 6, borderRadius: 3 }}>
           <Typography variant="h6" sx={{ mb: 2, color: "#1565c0" }}>
             🗺️ Lokacije zavetišč in razpored živine
@@ -342,7 +342,7 @@ export const LivestockDashboard: React.FC = () => {
               ))}
             </ComposableMap>
           </Box>
-        </Paper>
+        </Paper> */}
 
         {/* --- Line Chart --- */}
         <Paper elevation={3} sx={{ p: 3, mb: 5, borderRadius: 3 }}>

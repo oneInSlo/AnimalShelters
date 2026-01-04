@@ -40,3 +40,52 @@
 .read-the-docs {
   color: #888;
 }
+
+.page {
+  padding: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.page { padding: 1.5rem; }
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.controls .checkbox { display: flex; align-items: center; gap: .5rem; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.mapWrap { border: 1px solid #ddd; border-radius: 10px; overflow: hidden; }
+.side .card { border: 1px solid #ddd; border-radius: 10px; padding: 1rem; background: #fafafa; }
+.side .row { display: flex; gap: .75rem; margin-top: .75rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.card { border: 1px solid #ddd; padding: 1rem; border-radius: 10px; background: #fafafa; }
