@@ -233,7 +233,6 @@ export default function LiveAnimals() {
   const isRunning = !!resp?.meta?.running;
   const lastUpdatedLabel = formatSlDateTimeFromISO(resp?.meta?.lastUpdated ?? null);
 
-  // Simple theme tokens to match your App / Overview feel
   const theme = {
     primary: "#9c27b0",
     primaryDark: "#7b1fa2",
@@ -300,7 +299,7 @@ export default function LiveAnimals() {
             </Typography>
 
             <Typography sx={{ color: "rgba(255,255,255,0.92)", maxWidth: 850 }}>
-              Ta stran prikazuje živali pridobljene iz spletnega vira (scraping). Podatke lahko osvežiš ročno, vmes pa
+              Živali pridobljene iz spletnega vira (scraping). Podatke lahko osvežiš ročno, vmes pa
               vidiš status izvajanja in čas zadnje posodobitve.
             </Typography>
 
@@ -467,6 +466,9 @@ export default function LiveAnimals() {
         {/* GRID: max 3/row desktop, responsive */}
         <Grid container spacing={2}>
           {sortedAnimals.map((a) => {
+            if (a.name == "Kaja") {
+              return (<></>);
+            }
             const slug = getSlugFromLink(a.link);
             const img = a.image || a.galleryImgs?.[0] || "";
             const accepted = formatSlDateOnlyFromHorjul(a.dateOfAcceptance);
@@ -524,7 +526,7 @@ export default function LiveAnimals() {
                         Sprejem: <strong>{accepted}</strong>
                       </Typography>
 
-                      {/* {!!a.description && (
+                      {!!a.description && (
                         <Typography
                           variant="body2"
                           sx={{
@@ -537,7 +539,7 @@ export default function LiveAnimals() {
                         >
                           {a.description}
                         </Typography>
-                      )} */}
+                      )}
                     </CardContent>
                   </CardActionArea>
                 </Card>

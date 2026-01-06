@@ -2,115 +2,249 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
+import cors from "cors";
 import fs from "fs";
 import path from "path";
-import cors from "cors";
 import iconv from "iconv-lite";
-import createLlmRoutes from "./llm/llm.js";
-import createMapsRoutes from "./maps/maps.js";
 import { spawn } from "child_process";
 import { createRequire } from "module";
-import { loadData } from "./xmlStore.js";
+
+import createLlmRoutes from "./llm/llm.js";
+import createMapsRoutes from "./maps/maps.js";
 import { grpcClient } from "./grpcClient.js";
 import { sendPipeRequest } from "./pipes/pipeClient.js";
 import { exportJson, exportXml } from "./utils/export.js";
 
+import { db } from "./db/db.js";
+
+// DB repos 
+import { getAllShelters } from "./repo/sheltersRepo.js";
+import { getAnimals } from "./repo/animalsRepo.js";
+import { getAllEvents } from "./repo/eventsRepo.js";
+import { getHorjulAnimals } from "./repo/scrapedRepo.js";
+
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use("/api", createMapsRoutes({ getData: () => DATA }));
+
+const PORT = 4000;
 
 const require = createRequire(import.meta.url);
 global._ = require("underscore");
 const PX = require("./lib/px.cjs");
 
-const PORT = 4000;
-
-let DATA = loadData();
-
-const PX_URL = "https://pxweb.stat.si/SiStatData/Resources/PX/Databases/Data/15P1201S.PX";
-
-let horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: null };
+const PX_URL =
+  "https://pxweb.stat.si/SiStatData/Resources/PX/Databases/Data/15P1201S.PX";
 
 const HORJUL_JSON_PATH = path.resolve("scraper/horjul_animals.json");
 const HORJUL_SCRIPT_PATH = path.resolve("scraper/scrape_horjul.js");
 
+let horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: null };
+
+function getDataSnapshot() {
+  return {
+    shelters: getAllShelters(),
+    animals: getAnimals({}), 
+    events: getAllEvents(),
+  };
+}
+
+let DATA = getDataSnapshot();
+
+// maps
+app.use("/api", createMapsRoutes({ getData: () => DATA }));
+
+// OSM Nominatim search
+async function nominatimSearch(query) {
+  const url =
+    "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" +
+    encodeURIComponent(query);
+
+  const r = await fetch(url, {
+    headers: { "User-Agent": "AnimalShelters/1.0 (student project)" },
+  });
+  if (!r.ok) return null;
+
+  const arr = await r.json();
+  if (!Array.isArray(arr) || arr.length === 0) return null;
+
+  return {
+    lat: Number(arr[0].lat),
+    lon: Number(arr[0].lon),
+    display_name: arr[0].display_name,
+  };
+}
+
+// Import Horjul JSON into SQLite (upsert by link) 
+function upsertHorjulIntoDb(items) {
+  if (!Array.isArray(items)) return 0;
+
+  const insertAnimal = db.prepare(`
+    INSERT INTO scraped_animals (
+      source, link, name, image, daysInShelter, dateOfAcceptance, foundLocation,
+      status, temperament, sex, size, ageAtIntake, weightAtIntake, vetCare,
+      felvFiv, felvFivResult, description, shelterId
+    ) VALUES (
+      @source, @link, @name, @image, @daysInShelter, @dateOfAcceptance, @foundLocation,
+      @status, @temperament, @sex, @size, @ageAtIntake, @weightAtIntake, @vetCare,
+      @felvFiv, @felvFivResult, @description, @shelterId
+    )
+    ON CONFLICT(link) DO UPDATE SET
+      name=excluded.name,
+      image=excluded.image,
+      daysInShelter=excluded.daysInShelter,
+      dateOfAcceptance=excluded.dateOfAcceptance,
+      foundLocation=excluded.foundLocation,
+      status=excluded.status,
+      temperament=excluded.temperament,
+      sex=excluded.sex,
+      size=excluded.size,
+      ageAtIntake=excluded.ageAtIntake,
+      weightAtIntake=excluded.weightAtIntake,
+      vetCare=excluded.vetCare,
+      felvFiv=excluded.felvFiv,
+      felvFivResult=excluded.felvFivResult,
+      description=excluded.description,
+      shelterId=excluded.shelterId
+  `);
+
+  const selectIdByLink = db.prepare(`SELECT id FROM scraped_animals WHERE link = ?`);
+  const deleteGallery = db.prepare(`DELETE FROM scraped_animal_gallery WHERE scrapedAnimalId = ?`);
+  const insertGallery = db.prepare(`
+    INSERT OR IGNORE INTO scraped_animal_gallery (scrapedAnimalId, imgUrl)
+    VALUES (?, ?)
+  `);
+
+  const tx = db.transaction((rows) => {
+    let count = 0;
+
+    for (const raw of rows) {
+      if (!raw?.link) continue;
+
+      const record = {
+        source: "horjul",
+        link: String(raw.link),
+        name: raw.name ?? null,
+        image: raw.image ?? null,
+        daysInShelter: raw.daysInShelter ?? null,
+        dateOfAcceptance: raw.dateOfAcceptance ?? null,
+        foundLocation: raw.foundLocation ?? null,
+        status: raw.status ?? null,
+        temperament: raw.temperament ?? null,
+        sex: raw.sex ?? null,
+        size: raw.size ?? null,
+        ageAtIntake: raw.ageAtIntake ?? null,
+        weightAtIntake: raw.weightAtIntake ?? null,
+        vetCare: raw.vetCare ?? null,
+        felvFiv: raw.felvFiv ?? null,
+        felvFivResult: raw.felvFivResult ?? null,
+        description: raw.description ?? null,
+        shelterId: raw.shelterId ?? null,
+      };
+
+      insertAnimal.run(record);
+
+      const row = selectIdByLink.get(record.link);
+      if (row?.id) {
+        // simplest: replace gallery each refresh for that animal
+        deleteGallery.run(row.id);
+        const gallery = Array.isArray(raw.galleryImgs) ? raw.galleryImgs : [];
+        for (const imgUrl of gallery) {
+          if (imgUrl) insertGallery.run(row.id, String(imgUrl));
+        }
+      }
+
+      count += 1;
+    }
+
+    return count;
+  });
+
+  return tx(items);
+}
+
+// Core DB endpoints
 
 app.get("/api/shelters", (req, res) => {
-  res.json(DATA.shelters);
+  try {
+    res.json(getAllShelters());
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to load shelters" });
+  }
 });
 
 app.get("/api/animals", (req, res) => {
-  const { species, city, neutered, maxFee, region } = req.query;
-  let results = DATA.animals;
+  try {
+    const { species, sex, shelterId, neutered } = req.query;
 
-  if (species)
-    results = results.filter(
-      (a) => a.species.toLowerCase() === species.toLowerCase()
-    );
-  if (city)
-    results = results.filter(
-      (a) => a.shelter?.city.toLowerCase() === city.toLowerCase()
-    );
-  if (region)
-    results = results.filter(
-      (a) => a.shelter?.region.toLowerCase() === region.toLowerCase()
-    );
-  if (neutered !== undefined && neutered !== "") {
-    const normalized = String(neutered).toLowerCase().trim();
-    const boolVal = normalized === "true";
-    results = results.filter((a) => a.neutered === boolVal);
+    const filters = {
+      species: species ? String(species) : undefined,
+      sex: sex ? String(sex) : undefined,
+      shelterId: shelterId ? String(shelterId) : undefined,
+      neutered:
+        neutered === undefined || neutered === ""
+          ? undefined
+          : String(neutered).toLowerCase() === "true" || String(neutered) === "1",
+    };
+
+    res.json(getAnimals(filters));
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to load animals" });
   }
-  if (maxFee) results = results.filter((a) => a.adoptionFee <= Number(maxFee));
-
-  console.table(
-    results.map((a) => ({
-      id: a.id,
-      name: a.name,
-      city: a.shelter?.city,
-      fee: a.adoptionFee,
-      neutered: a.neutered,
-    }))
-  );
-
-  res.json(results);
 });
 
-// backend endpoint for use on frontend
+app.get("/api/events", (req, res) => {
+  try {
+    res.json(getAllEvents());
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to load events" });
+  }
+});
+
 app.post("/api/export", (req, res) => {
-  const { species, city, region, neutered, maxFee } = req.body;
-  let results = DATA.animals;
+  try {
+    const { species, city, region, neutered, maxFee } = req.body ?? {};
 
-  if (species)
-    results = results.filter((a) => a.species.toLowerCase() === species.toLowerCase());
-  if (city)
-    results = results.filter((a) => a.shelter?.city.toLowerCase() === city.toLowerCase());
-  if (region)
-    results = results.filter((a) => a.shelter?.region.toLowerCase() === region.toLowerCase());
-  if (neutered !== undefined && neutered !== "") {
-    const boolVal = String(neutered).toLowerCase().trim() === "true";
-    results = results.filter((a) => a.neutered === boolVal);
+    let results = getAnimals({
+      species: species ? String(species) : undefined,
+      neutered:
+        neutered === undefined || neutered === ""
+          ? undefined
+          : String(neutered).toLowerCase() === "true" || String(neutered) === "1",
+    });
+
+    if (city) {
+      const c = String(city).toLowerCase();
+      results = results.filter((a) => (a.shelter?.city ?? "").toLowerCase() === c);
+    }
+    if (region) {
+      const r = String(region).toLowerCase();
+      results = results.filter((a) => (a.shelter?.region ?? "").toLowerCase() === r);
+    }
+    if (maxFee) {
+      const mf = Number(maxFee);
+      if (Number.isFinite(mf)) results = results.filter((a) => Number(a.adoptionFee ?? 0) <= mf);
+    }
+
+    exportJson(results);
+    exportXml(results);
+
+    res.json({ message: "Filtered export successful!", count: results.length });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Export failed" });
   }
-  if (maxFee)
-    results = results.filter((a) => a.adoptionFee <= Number(maxFee));
-
-  exportJson(results);
-  exportXml(results);
-  res.json({
-    message: "Filtered export successful!",
-    count: results.length,
-  });
 });
 
-// livestock endpoint (.px file)
 app.get("/api/livestock", async (req, res) => {
   try {
-    // download .px file dynamically from URL
     const response = await fetch(PX_URL);
     const buffer = await response.arrayBuffer();
     const pxText = iconv.decode(Buffer.from(buffer), "win1250");
 
-    // parse using Px.js
     const pxInstance = new PX(pxText);
     const variables = pxInstance.variables();
     const entries = pxInstance.entries();
@@ -122,7 +256,6 @@ app.get("/api/livestock", async (req, res) => {
   }
 });
 
-// gRPC endpoints
 app.get("/api/grpc/shelters", (req, res) => {
   grpcClient.ListShelters({}, (err, response) => {
     if (err) {
@@ -144,16 +277,15 @@ app.get("/api/grpc/animals", (req, res) => {
 });
 
 app.get("/api/grpc/shelters/:id/animals", (req, res) => {
-  grpcClient.GetAnimalsByShelter(
-    { shelterId: req.params.id },
-    (err, response) => {
-      if (err) {
-        console.error("gRPC error (GetAnimalsByShelter):", err);
-        return res.status(500).json({ error: "Napaka pri pridobivanju živali za zavetišče." });
-      }
-      res.json(response.animals);
+  grpcClient.GetAnimalsByShelter({ shelterId: req.params.id }, (err, response) => {
+    if (err) {
+      console.error("gRPC error (GetAnimalsByShelter):", err);
+      return res
+        .status(500)
+        .json({ error: "Napaka pri pridobivanju živali za zavetišče." });
     }
-  );
+    res.json(response.animals);
+  });
 });
 
 app.get("/api/grpc/animals/live", (req, res) => {
@@ -184,16 +316,15 @@ app.get("/api/grpc/animals/live", (req, res) => {
   });
 });
 
-// LLM
+
 app.use("/api", createLlmRoutes(DATA));
 
-// Named Pipes
 app.get("/api/pipe/stats", async (req, res) => {
   try {
     const response = await sendPipeRequest({ command: "getStats" });
     res.json(response);
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err?.message ?? err });
   }
 });
 
@@ -205,12 +336,10 @@ app.get("/api/pipe/shelter/:id", async (req, res) => {
     });
     res.json(response);
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err?.message ?? err });
   }
 });
 
-// MAPS
-// OSM: geocode generic query
 app.get("/api/osm/geocode", async (req, res) => {
   try {
     const q = String(req.query.q || "").trim();
@@ -223,10 +352,9 @@ app.get("/api/osm/geocode", async (req, res) => {
   }
 });
 
-// OSM: enrich shelters with coords (uses XML + geocode when needed)
 app.get("/api/osm/shelters-enriched", async (req, res) => {
   try {
-    const shelters = DATA.shelters;
+    const shelters = getAllShelters();
 
     const enriched = [];
     for (const s of shelters) {
@@ -234,7 +362,7 @@ app.get("/api/osm/shelters-enriched", async (req, res) => {
       let lon = Number(s.longitude);
 
       if (!lat || !lon) {
-        const q = `${s.address}, ${s.postalCode} ${s.city}, Slovenia`;
+        const q = `${s.address ?? ""}, ${s.postalCode ?? ""} ${s.city ?? ""}, Slovenia`;
         const geo = await nominatimSearch(q);
         if (geo) {
           lat = geo.lat;
@@ -252,16 +380,9 @@ app.get("/api/osm/shelters-enriched", async (req, res) => {
   }
 });
 
-// events (from .xml)
-app.get("/api/events", (req, res) => {
-  res.json(DATA.events);
-});
-
-// scraper
 app.get("/api/horjul", (req, res) => {
   try {
-    const exists = fs.existsSync(HORJUL_JSON_PATH);
-    const data = exists ? JSON.parse(fs.readFileSync(HORJUL_JSON_PATH, "utf-8")) : [];
+    const data = getHorjulAnimals(); 
     res.json({
       meta: {
         running: horjulJob.running,
@@ -272,7 +393,8 @@ app.get("/api/horjul", (req, res) => {
       data,
     });
   } catch (e) {
-    res.status(500).json({ error: "Failed to read horjul_animals.json" });
+    console.error(e);
+    res.status(500).json({ error: "Failed to read Horjul animals from DB" });
   }
 });
 
@@ -283,24 +405,42 @@ app.get("/api/horjul/status", (req, res) => {
 app.post("/api/horjul/refresh", (req, res) => {
   if (horjulJob.running) return res.status(409).json({ error: "Scrape already running" });
 
-  horjulJob = { running: true, lastUpdated: horjulJob.lastUpdated, lastCount: horjulJob.lastCount, lastError: null };
-  console.log("🟡 Horjul scrape started...");
+  horjulJob = {
+    running: true,
+    lastUpdated: horjulJob.lastUpdated,
+    lastCount: horjulJob.lastCount,
+    lastError: null,
+  };
 
+  console.log("🟡 Horjul scrape started.");
   const child = spawn("node", [HORJUL_SCRIPT_PATH], { stdio: "inherit" });
 
   child.on("close", () => {
     try {
-      const data = JSON.parse(fs.readFileSync(HORJUL_JSON_PATH, "utf-8"));
+      const raw = fs.readFileSync(HORJUL_JSON_PATH, "utf-8");
+      const scraped = JSON.parse(raw);
+
+      const importedCount = upsertHorjulIntoDb(scraped);
+
       horjulJob = {
         running: false,
         lastUpdated: new Date().toISOString(),
-        lastCount: Array.isArray(data) ? data.length : 0,
+        lastCount: importedCount,
         lastError: null,
       };
-      console.log("🟢 Horjul scrape finished. Count:", horjulJob.lastCount);
+
+      DATA = getDataSnapshot();
+
+      console.log("🟢 Horjul scrape finished. Imported:", importedCount);
     } catch (e) {
-      horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: "Failed to parse output JSON" };
+      horjulJob = {
+        running: false,
+        lastUpdated: null,
+        lastCount: 0,
+        lastError: "Failed to parse/import Horjul JSON",
+      };
       console.log("🔴 Horjul scrape finished with error:", horjulJob.lastError);
+      console.error(e);
     }
   });
 
@@ -312,5 +452,13 @@ app.post("/api/horjul/refresh", (req, res) => {
   res.status(202).json({ message: "Scrape started" });
 });
 
+app.get("/api/db/health", (req, res) => {
+  const shelters = db.prepare("SELECT COUNT(*) AS c FROM shelters").get().c;
+  const animals = db.prepare("SELECT COUNT(*) AS c FROM animals").get().c;
+  const events = db.prepare("SELECT COUNT(*) AS c FROM events").get().c;
+  const scraped = db.prepare("SELECT COUNT(*) AS c FROM scraped_animals").get().c;
+
+  res.json({ ok: true, shelters, animals, events, scraped });
+});
 
 app.listen(PORT, () => console.log("--- Backend on http://localhost:4000"));

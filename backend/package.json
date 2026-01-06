@@ -7,7 +7,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "db:migrate": "node db/migrate.js",
+    "db:seed": "node db/seed.js",
+    "db:reset": "npm run db:migrate && npm run db:seed"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +18,7 @@
     "@google/generative-ai": "^0.24.1",
     "@grpc/grpc-js": "^1.14.2",
     "@grpc/proto-loader": "^0.8.0",
+    "better-sqlite3": "^12.5.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
@@ -26,5 +30,8 @@
     "pxjs": "^0.0.0",
     "underscore": "^1.13.7",
     "xmlbuilder2": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3"
   }
 }

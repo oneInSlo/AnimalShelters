@@ -156,7 +156,7 @@ function farmFitScore(a: Animal): { score: number; label: string; reasons: strin
     score += 2;
     reasons.push("Prisoten lovski nagon (lahko plus za “barn-cat” vlogo).");
   }
-  if (has("opozorilen")) {
+  if (has("opozorilen") || has("opozorilna")) {
     score += 2;
     reasons.push("Opozorilen temperament (koristno za zunanje okolje).");
   }
@@ -164,7 +164,7 @@ function farmFitScore(a: Animal): { score: number; label: string; reasons: strin
     score += 1;
     reasons.push("Mirnejši značaj (stabilno vedenje na kmetiji).");
   }
-  if (has("prijazen") || has("dru")) {
+  if (has("prijazen") || has("družaben")) {
     score += 1;
     reasons.push("Prijazen/družaben (lažje sobivanje z ljudmi/okoljem).");
   }
@@ -555,7 +555,7 @@ export const LivestockDashboard: React.FC = () => {
           sx={{
             position: "absolute",
             inset: 0,
-            backgroundImage: "url('/assets/img/dog-wp.jpg')",
+            backgroundImage: "url('/assets/img/livestock.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             filter: "brightness(0.55)",
