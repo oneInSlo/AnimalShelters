@@ -136,6 +136,32 @@ function haversineKm(
   return R * c;
 }
 
+function slovenianAge(ageMonths: number) {
+  const years = Math.floor(ageMonths / 12);
+  const months = ageMonths % 12;
+
+  const yearText = (n: number) => {
+    if (n === 1) return "leto";
+    if (n === 2) return "leti";
+    if (n === 3 || n === 4) return "leta";
+    return "let";
+  };
+
+  const monthText = (n: number) => {
+    if (n === 1) return "mesec";
+    if (n === 2) return "meseca";
+    if (n === 3 || n === 4) return "mesece";
+    return "mesecev";
+  };
+
+  const parts = [];
+
+  if (years > 0) parts.push(`${years} ${yearText(years)}`);
+  if (months > 0) parts.push(`${months} ${monthText(months)}`);
+
+  return parts.join(" ");
+}
+
 export default function SheltersOverview() {
   const [shelters, setShelters] = useState<Shelter[]>([]);
   const [events, setEvents] = useState<EventItem[]>([]);
@@ -250,44 +276,45 @@ export default function SheltersOverview() {
     );
   };
 
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          bgcolor: "#fafafa",
-        }}
-      >
-        <Box sx={{ textAlign: "center" }}>
-          <Box
-            sx={{
-              width: 80,
-              height: 80,
-              borderRadius: "50%",
-              border: `4px solid ${alpha(theme.primary, 0.2)}`,
-              borderTopColor: theme.primary,
-              animation: "spin 1s linear infinite",
-              mx: "auto",
-              mb: 3,
-              "@keyframes spin": {
-                "0%": { transform: "rotate(0deg)" },
-                "100%": { transform: "rotate(360deg)" },
-              },
-            }}
-          />
-          <Typography
-            variant="h5"
-            sx={{ color: theme.primary, fontWeight: 600 }}
-          >
-            Nalaganje podatkov...
-          </Typography>
-        </Box>
-      </Box>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         minHeight: "100vh",
+  //         minWidth: "100%",
+  //         bgcolor: "#fafafa",
+  //       }}
+  //     >
+  //       <Box sx={{ textAlign: "center" }}>
+  //         <Box
+  //           sx={{
+  //             width: 100,
+  //             height: 100,
+  //             borderRadius: "50%",
+  //             border: `4px solid ${alpha(theme.primary, 0.2)}`,
+  //             borderTopColor: theme.primary,
+  //             animation: "spin 1s linear infinite",
+  //             mx: "auto",
+  //             mb: 3,
+  //             "@keyframes spin": {
+  //               "0%": { transform: "rotate(0deg)" },
+  //               "100%": { transform: "rotate(360deg)" },
+  //             },
+  //           }}
+  //         />
+  //         <Typography
+  //           variant="h5"
+  //           sx={{ color: theme.primary, fontWeight: 600 }}
+  //         >
+  //           Nalaganje podatkov...
+  //         </Typography>
+  //       </Box>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh", width: "100vw" }}>
@@ -1028,7 +1055,7 @@ export default function SheltersOverview() {
                           <TableCell>{animal.breed}</TableCell>
                           <TableCell>{animal.sex}</TableCell>
                           <TableCell>
-                            {Math.floor(animal.ageMonths / 12)} let
+                            {slovenianAge(animal.ageMonths)}
                           </TableCell>
                           <TableCell sx={{ fontWeight: 600 }}>
                             {animal.adoptionFee} €
