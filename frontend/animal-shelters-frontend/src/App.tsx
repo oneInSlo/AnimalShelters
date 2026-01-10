@@ -33,6 +33,7 @@ import SheltersOverview from "./components/SheltersOverview";
 import LiveAnimals from "./components/LiveAnimals";
 import LiveAnimalDetail from "./components/LiveAnimalDetail";
 import { LocationOnOutlined } from "@mui/icons-material";
+import { EventFeed } from "./components/EventFeed";
 
 const featureCards = [
   {
@@ -76,9 +77,9 @@ const featureCards = [
     color: "#d32f2f",
   },
   {
-    title: "Tehnološki demo",
-    desc: "gRPC in Named Pipes integracije v živo",
-    to: "/grpc-live",
+    title: "Dogodki",
+    desc: "Viri dogodkov - uporaba Bus",
+    to: "/live-events",
     img: "/assets/img/bunny.jpg",
     icon: CodeIcon,
     color: "#0288d1",
@@ -681,6 +682,7 @@ export default function App() {
         <Route path="/overview" element={<SheltersOverview />} />
         <Route path="/live-animals" element={<LiveAnimals />} />
         <Route path="/live-animals/:slug" element={<LiveAnimalDetail />} />
+        <Route path="/live-events" element={<EventFeed />} />
       </Routes>
     </Router>
   );

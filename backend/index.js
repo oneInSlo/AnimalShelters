@@ -15,9 +15,11 @@ import { grpcClient } from "./grpcClient.js";
 import { sendPipeRequest } from "./pipes/pipeClient.js";
 import { exportJson, exportXml } from "./utils/export.js";
 
+import { publishEvent, consumeEvents } from "./rabbitmq/rabbitmq.js";
+
 import { db } from "./db/db.js";
 
-// DB repos 
+// DB repos
 import { getAllShelters } from "./repo/sheltersRepo.js";
 import { getAnimals } from "./repo/animalsRepo.js";
 import { getAllEvents } from "./repo/eventsRepo.js";
@@ -39,12 +41,17 @@ const PX_URL =
 const HORJUL_JSON_PATH = path.resolve("scraper/horjul_animals.json");
 const HORJUL_SCRIPT_PATH = path.resolve("scraper/scrape_horjul.js");
 
-let horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: null };
+let horjulJob = {
+  running: false,
+  lastUpdated: null,
+  lastCount: 0,
+  lastError: null,
+};
 
 function getDataSnapshot() {
   return {
     shelters: getAllShelters(),
-    animals: getAnimals({}), 
+    animals: getAnimals({}),
     events: getAllEvents(),
   };
 }
@@ -75,7 +82,7 @@ async function nominatimSearch(query) {
   };
 }
 
-// Import Horjul JSON into SQLite (upsert by link) 
+// Import Horjul JSON into SQLite (upsert by link)
 function upsertHorjulIntoDb(items) {
   if (!Array.isArray(items)) return 0;
 
@@ -108,8 +115,12 @@ function upsertHorjulIntoDb(items) {
       shelterId=excluded.shelterId
   `);
 
-  const selectIdByLink = db.prepare(`SELECT id FROM scraped_animals WHERE link = ?`);
-  const deleteGallery = db.prepare(`DELETE FROM scraped_animal_gallery WHERE scrapedAnimalId = ?`);
+  const selectIdByLink = db.prepare(
+    `SELECT id FROM scraped_animals WHERE link = ?`
+  );
+  const deleteGallery = db.prepare(
+    `DELETE FROM scraped_animal_gallery WHERE scrapedAnimalId = ?`
+  );
   const insertGallery = db.prepare(`
     INSERT OR IGNORE INTO scraped_animal_gallery (scrapedAnimalId, imgUrl)
     VALUES (?, ?)
@@ -185,7 +196,8 @@ app.get("/api/animals", (req, res) => {
       neutered:
         neutered === undefined || neutered === ""
           ? undefined
-          : String(neutered).toLowerCase() === "true" || String(neutered) === "1",
+          : String(neutered).toLowerCase() === "true" ||
+            String(neutered) === "1",
     };
 
     res.json(getAnimals(filters));
@@ -213,20 +225,26 @@ app.post("/api/export", (req, res) => {
       neutered:
         neutered === undefined || neutered === ""
           ? undefined
-          : String(neutered).toLowerCase() === "true" || String(neutered) === "1",
+          : String(neutered).toLowerCase() === "true" ||
+            String(neutered) === "1",
     });
 
     if (city) {
       const c = String(city).toLowerCase();
-      results = results.filter((a) => (a.shelter?.city ?? "").toLowerCase() === c);
+      results = results.filter(
+        (a) => (a.shelter?.city ?? "").toLowerCase() === c
+      );
     }
     if (region) {
       const r = String(region).toLowerCase();
-      results = results.filter((a) => (a.shelter?.region ?? "").toLowerCase() === r);
+      results = results.filter(
+        (a) => (a.shelter?.region ?? "").toLowerCase() === r
+      );
     }
     if (maxFee) {
       const mf = Number(maxFee);
-      if (Number.isFinite(mf)) results = results.filter((a) => Number(a.adoptionFee ?? 0) <= mf);
+      if (Number.isFinite(mf))
+        results = results.filter((a) => Number(a.adoptionFee ?? 0) <= mf);
     }
 
     exportJson(results);
@@ -260,7 +278,9 @@ app.get("/api/grpc/shelters", (req, res) => {
   grpcClient.ListShelters({}, (err, response) => {
     if (err) {
       console.error("gRPC error (ListShelters):", err);
-      return res.status(500).json({ error: "Napaka pri pridobivanju zavetišč." });
+      return res
+        .status(500)
+        .json({ error: "Napaka pri pridobivanju zavetišč." });
     }
     res.json(response.shelters);
   });
@@ -277,22 +297,25 @@ app.get("/api/grpc/animals", (req, res) => {
 });
 
 app.get("/api/grpc/shelters/:id/animals", (req, res) => {
-  grpcClient.GetAnimalsByShelter({ shelterId: req.params.id }, (err, response) => {
-    if (err) {
-      console.error("gRPC error (GetAnimalsByShelter):", err);
-      return res
-        .status(500)
-        .json({ error: "Napaka pri pridobivanju živali za zavetišče." });
+  grpcClient.GetAnimalsByShelter(
+    { shelterId: req.params.id },
+    (err, response) => {
+      if (err) {
+        console.error("gRPC error (GetAnimalsByShelter):", err);
+        return res
+          .status(500)
+          .json({ error: "Napaka pri pridobivanju živali za zavetišče." });
+      }
+      res.json(response.animals);
     }
-    res.json(response.animals);
-  });
+  );
 });
 
 app.get("/api/grpc/animals/live", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-  res.flushHeaders();
+  res.flushHeaders?.();
 
   const stream = grpcClient.StreamAnimalUpdates({});
 
@@ -315,7 +338,6 @@ app.get("/api/grpc/animals/live", (req, res) => {
     res.end();
   });
 });
-
 
 app.use("/api", createLlmRoutes(DATA));
 
@@ -362,7 +384,9 @@ app.get("/api/osm/shelters-enriched", async (req, res) => {
       let lon = Number(s.longitude);
 
       if (!lat || !lon) {
-        const q = `${s.address ?? ""}, ${s.postalCode ?? ""} ${s.city ?? ""}, Slovenia`;
+        const q = `${s.address ?? ""}, ${s.postalCode ?? ""} ${
+          s.city ?? ""
+        }, Slovenia`;
         const geo = await nominatimSearch(q);
         if (geo) {
           lat = geo.lat;
@@ -382,7 +406,7 @@ app.get("/api/osm/shelters-enriched", async (req, res) => {
 
 app.get("/api/horjul", (req, res) => {
   try {
-    const data = getHorjulAnimals(); 
+    const data = getHorjulAnimals();
     res.json({
       meta: {
         running: horjulJob.running,
@@ -402,8 +426,10 @@ app.get("/api/horjul/status", (req, res) => {
   res.json(horjulJob);
 });
 
-app.post("/api/horjul/refresh", (req, res) => {
-  if (horjulJob.running) return res.status(409).json({ error: "Scrape already running" });
+app.post("/api/horjul/refresh", async (req, res) => {
+  if (horjulJob.running) {
+    return res.status(409).json({ error: "Scrape already running" });
+  }
 
   horjulJob = {
     running: true,
@@ -415,7 +441,30 @@ app.post("/api/horjul/refresh", (req, res) => {
   console.log("🟡 Horjul scrape started.");
   const child = spawn("node", [HORJUL_SCRIPT_PATH], { stdio: "inherit" });
 
-  child.on("close", () => {
+  const startTs = Date.now();
+
+  await publishEvent({
+    type: "HORJUL_REFRESH.STARTED",
+    status: "INFO",
+    timestamp: new Date().toISOString(),
+  });
+
+  const heartbeat = setInterval(() => {
+    publishEvent({
+      type: "HORJUL_REFRESH.PROGRESS",
+      status: "INFO",
+      elapsedMs: Date.now() - startTs,
+      timestamp: new Date().toISOString(),
+    }).catch((err) => console.error("RabbitMQ heartbeat publish failed:", err));
+  }, 5000);
+
+  const stopHeartbeat = () => {
+    if (heartbeat) clearInterval(heartbeat);
+  };
+
+  child.on("close", async () => {
+    stopHeartbeat();
+
     try {
       const raw = fs.readFileSync(HORJUL_JSON_PATH, "utf-8");
       const scraped = JSON.parse(raw);
@@ -432,6 +481,14 @@ app.post("/api/horjul/refresh", (req, res) => {
       DATA = getDataSnapshot();
 
       console.log("🟢 Horjul scrape finished. Imported:", importedCount);
+
+      await publishEvent({
+        type: "HORJUL_REFRESH.DONE",
+        status: "DONE",
+        importedCount,
+        elapsedMs: Date.now() - startTs,
+        timestamp: new Date().toISOString(),
+      });
     } catch (e) {
       horjulJob = {
         running: false,
@@ -439,26 +496,83 @@ app.post("/api/horjul/refresh", (req, res) => {
         lastCount: 0,
         lastError: "Failed to parse/import Horjul JSON",
       };
+
       console.log("🔴 Horjul scrape finished with error:", horjulJob.lastError);
       console.error(e);
+
+      await publishEvent({
+        type: "HORJUL_REFRESH.ERROR",
+        status: "ERROR",
+        error: horjulJob.lastError,
+        elapsedMs: Date.now() - startTs,
+        timestamp: new Date().toISOString(),
+      });
     }
   });
 
-  child.on("error", (e) => {
-    horjulJob = { running: false, lastUpdated: null, lastCount: 0, lastError: e.message };
+  child.on("error", async (e) => {
+    stopHeartbeat();
+
+    horjulJob = {
+      running: false,
+      lastUpdated: null,
+      lastCount: 0,
+      lastError: e.message,
+    };
+
     console.log("🔴 Horjul scrape process error:", e.message);
+
+    try {
+      await publishEvent({
+        type: "HORJUL_REFRESH.ERROR",
+        status: "ERROR",
+        error: e.message,
+        elapsedMs: Date.now() - startTs,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (err) {
+      console.error("RabbitMQ error publish failed:", err);
+    }
   });
 
-  res.status(202).json({ message: "Scrape started" });
+  return res.status(202).json({ message: "Scrape started" });
 });
 
 app.get("/api/db/health", (req, res) => {
   const shelters = db.prepare("SELECT COUNT(*) AS c FROM shelters").get().c;
   const animals = db.prepare("SELECT COUNT(*) AS c FROM animals").get().c;
   const events = db.prepare("SELECT COUNT(*) AS c FROM events").get().c;
-  const scraped = db.prepare("SELECT COUNT(*) AS c FROM scraped_animals").get().c;
+  const scraped = db
+    .prepare("SELECT COUNT(*) AS c FROM scraped_animals")
+    .get().c;
 
   res.json({ ok: true, shelters, animals, events, scraped });
+});
+
+// rabbitmq
+const clients = new Set();
+
+app.get("/api/events/stream", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
+  res.write(`event: connected\ndata: ok\n\n`);
+  clients.add(res);
+
+  req.on("close", () => clients.delete(res));
+});
+
+function broadcast(event) {
+  const payload = `event: rabbit\ndata: ${JSON.stringify(event)}\n\n`;
+  for (const client of clients) {
+    client.write(payload);
+  }
+}
+
+consumeEvents(async (event) => {
+  console.log("📨 RabbitMQ event:", event);
+  broadcast(event);
 });
 
 app.listen(PORT, () => console.log("--- Backend on http://localhost:4000"));
